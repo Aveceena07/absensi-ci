@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Login</title>
 </head>
 <style>
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap');
@@ -189,16 +189,14 @@ section .container.active .signinBx .imgBx {
                         src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg"
                         alt="" /></div>
                 <div class="formBx">
-                    <form>
+                    <form method="post" action="<?php echo base_url(
+                        'auth/aksi_login'
+                    ); ?>">
                         <h2>Login</h2>
                         <div class="input-group">
-                            <input type="text" name="username" placeholder="Username" />
                             <input type="email" name="email" placeholder="Email" />
-                            <input type="text" name="nama_depan" placeholder="Nama Depan" />
-                            <input type="text" name="nama_belakang" placeholder="Nama Belakang" />
                             <input type="password" name="password" placeholder="Password" />
-                            <input type="text" name="role" placeholder="Role" />
-                            <input type="file" name="foto" placeholder="Profil" />
+                            <!-- <input type="file" name="foto" placeholder="Profil" /> -->
                         </div>
                         <input type="submit" name="" value="Login" />
                         <p class="signup">

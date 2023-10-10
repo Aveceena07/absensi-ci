@@ -198,24 +198,25 @@ section .container.active .signinBx .imgBx {
                         'auth/aksi_register'
                     ); ?>" method="post">
                         <h2>Register</h2>
-                        <p class="karyawan">Register Sebagai Karyawan</p>
+                        <p class="karyawan">Register Sebagai Admin</p>
                         <div class="input-group">
                             <input type="text" name="username" placeholder="Username" />
                             <input type="email" name="email" placeholder="Email" />
                             <input type="text" name="nama_depan" placeholder="Nama Depan" />
                             <input type="text" name="nama_belakang" placeholder="Nama Belakang" />
                             <input type="password" name="password" placeholder="Password" />
+                            <!-- Input tersembunyi untuk menentukan peran sebagai admin -->
+                            <input type="hidden" name="admin_code" value="admin_secret_code">
                         </div>
                         <input type="submit" name="" value="Register" />
                         <p class="signup">
                             Already have an account?
                             <a href="<?php echo base_url('auth'); ?>">Login</a>
-                        </p>
                         <p class="signup">
-                            Want to register as admin?
+                            Want to register as employee?
                             <a href="<?php echo base_url(
-                                'auth/register_admin'
-                            ); ?>">Admin</a>
+                                'auth/register'
+                            ); ?>">employee</a>
                         </p>
                     </form>
                 </div>
