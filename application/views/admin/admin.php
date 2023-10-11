@@ -15,7 +15,7 @@ h1 {
 
 <body>
     <?php $this->load->view('sidebar'); ?>
-    <h1>ewwdewdwdewdwdewdwdewdewdewdewdedwdwedwedwde</h1>
+    <h1>Admin</h1>
 </body>
 
 </html>

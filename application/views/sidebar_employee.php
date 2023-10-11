@@ -324,7 +324,7 @@ body.dark {
     <nav class="navbar">
         <div class="logo_item">
             <i class="bx bx-menu" id="sidebarOpen"></i>
-            Absensi
+            Absen Karyawan
         </div>
 
         <div class="search_bar">
@@ -333,7 +333,6 @@ body.dark {
 
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
-            <i class='bx bx-sun' id="darkLight"></i>
             <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
                 alt="" class="profile" />
         </div>
@@ -355,8 +354,20 @@ body.dark {
 
                     <ul class="menu_items submenu">
                         <a href="<?php echo base_url(
-                            'employee/karyawan'
-                        ); ?>" class="nav_link sublink">Karyawan</a>
+                            'employee/dashboard'
+                        ); ?>" class="nav_link sublink">Dashboard</a>
+                    </ul>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
+                            'employee/tambah_absen'
+                        ); ?>" class="nav_link sublink">Absensi</a>
+                    </ul>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
+                            'employee/history'
+                        ); ?>" class="nav_link sublink">History</a>
                     </ul>
                 </li>
 
@@ -376,7 +387,6 @@ body.dark {
     <!-- JavaScript -->
     <script>
     const body = document.querySelector("body");
-    const darkLight = document.querySelector("#darkLight");
     const sidebar = document.querySelector(".sidebar");
     const submenuItems = document.querySelectorAll(".submenu_item");
     const sidebarOpen = document.querySelector("#sidebarOpen");
@@ -399,16 +409,6 @@ body.dark {
     sidebar.addEventListener("mouseleave", () => {
         if (sidebar.classList.contains("hoverable")) {
             sidebar.classList.add("close");
-        }
-    });
-
-    darkLight.addEventListener("click", () => {
-        body.classList.toggle("dark");
-        if (body.classList.contains("dark")) {
-            document.setI
-            darkLight.classList.replace("bx-sun", "bx-moon");
-        } else {
-            darkLight.classList.replace("bx-moon", "bx-sun");
         }
     });
 

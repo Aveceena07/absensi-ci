@@ -324,7 +324,7 @@ body.dark {
     <nav class="navbar">
         <div class="logo_item">
             <i class="bx bx-menu" id="sidebarOpen"></i>
-            Absensi
+            Admin
         </div>
 
         <div class="search_bar">

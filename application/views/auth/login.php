@@ -201,9 +201,7 @@ section .container.active .signinBx .imgBx {
                         <input type="submit" name="" value="Login" />
                         <p class="signup">
                             Don't have an account ?
-                            <a href="<?php echo base_url(
-                                'auth/register'
-                            ); ?>">Register</a>
+                            <a href="<?php echo 'auth/register'; ?>">Register</a>
                         </p>
                     </form>
                 </div>
