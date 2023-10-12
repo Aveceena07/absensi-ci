@@ -19,12 +19,12 @@
 <body>
     <?php $this->load->view('sidebar_employee'); ?>
     <div class="kegiatan mb-3">
-        <form method="post" action="<?= base_url('employee/save_absensi') ?>">
-            <h3>Absen</h3>
+        <form method="post" action="<?= base_url('employee/simpan_izin') ?>">
+            <h3>Izin</h3>
             <br>
-            <label for="Kegiatan" class="form-label">Kegiatan :</label>
-            <textarea class="form-control" aria-label="With textarea" name="kegiatan"></textarea>
-            <button type="submit" class="btn btn-success mt-4">Masuk</button>
+            <label for="Keterangan" class="form-label">Keterangan :</label>
+            <textarea class="form-control" aria-label="With textarea" name="keterangan" required></textarea>
+            <button type="submit" class="btn btn-success mt-4">Izin</button>
         </form>
     </div>
 </body>

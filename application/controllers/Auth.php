@@ -102,7 +102,7 @@ class Auth extends CI_Controller
                     if ($user->role == 'admin') {
                         redirect('admin/admin');
                     } elseif ($user->role == 'karyawan') {
-                        redirect('employee/karyawan');
+                        redirect('employee/dashboard');
                     }
                 } else {
                     $data['error'] = 'Email or password is incorrect';

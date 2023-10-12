@@ -19,13 +19,19 @@
 <body>
     <?php $this->load->view('sidebar_employee'); ?>
     <div class="kegiatan mb-3">
-        <form method="post" action="<?= base_url('employee/save_absensi') ?>">
-            <h3>Absen</h3>
+        <?php foreach ($absensi as $absen): ?>
+        <form method="post" action="<?= base_url(
+            'employee/aksi_update_absen'
+        ) ?>" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $absen->id; ?>">
+            <h3>Ubah</h3>
             <br>
+            <!-- <?php echo $absen->id; ?> -->
             <label for="Kegiatan" class="form-label">Kegiatan :</label>
             <textarea class="form-control" aria-label="With textarea" name="kegiatan"></textarea>
-            <button type="submit" class="btn btn-success mt-4">Masuk</button>
+            <button type="submit" class="btn btn-success mt-4">Ubah</button>
         </form>
+        <?php endforeach; ?>
     </div>
 </body>
 

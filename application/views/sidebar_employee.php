@@ -333,8 +333,10 @@ body.dark {
 
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
-                alt="" class="profile" />
+            <a href="<?php echo base_url('employee/profil'); ?>">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
+                    alt="" class="profile" />
+            </a>
         </div>
     </nav>
 
@@ -360,6 +362,12 @@ body.dark {
 
                     <ul class="menu_items submenu">
                         <a href="<?php echo base_url(
+                            'employee/izin'
+                        ); ?>" class="nav_link sublink">Izin</a>
+                    </ul>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
                             'employee/tambah_absen'
                         ); ?>" class="nav_link sublink">Absensi</a>
                     </ul>
@@ -378,7 +386,7 @@ body.dark {
                         <i class='bx bx-log-in'></i>
                     </div>
                     <div class="bottom collapse_sidebar">
-                        <span> Log out</span>
+                        <span> Tutup </span>
                         <i class='bx bx-log-out'></i>
                     </div>
                 </div>
