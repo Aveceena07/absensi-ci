@@ -68,6 +68,12 @@ class User_model extends CI_Model
         $this->db->delete('User');
     }
 
+    public function updateUser($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('user', $data);
+    }
+
     public function updateUserFoto($user_id, $foto)
     {
         $data = ['foto' => $foto];

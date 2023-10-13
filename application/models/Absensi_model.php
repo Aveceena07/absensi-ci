@@ -17,6 +17,11 @@ class Absensi_model extends CI_Model
         return $query->result_array();
     }
 
+    function get_data($table)
+    {
+        return $this->db->get($table);
+    }
+
     public function updateAbsensi($id, $data)
     {
         // Mengubah data absensi berdasarkan ID

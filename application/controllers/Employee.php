@@ -9,19 +9,59 @@ class Employee extends CI_Controller
         $this->load->model('User_model');
         $this->load->model('Absensi_model');
         $this->load->model('m_model');
+        $this->load->library('upload');
         $this->load->library('form_validation');
+    }
+
+    public function upload_img($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/siswa/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = '3000';
+        $config['fle_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return [true, $nama];
+        }
+    }
+
+    public function upload_image_karyawan($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/karyawan/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return [true, $nama];
+        }
     }
 
     public function dashboard()
     {
-        $this->load->view('employee/dashboard');
+        $this->load->model('Absensi_model');
+        $data['absensi'] = $this->Absensi_model->getAbsensi();
+        $this->load->view('employee/dashboard', $data);
+        $data['absensi'] = $this->Absensi_model->getAbsensi();
+        $data['jumlah_masuk'] = $this->Absensi_model
+            ->get_data('absensi')
+            ->num_rows();
     }
 
     public function tambah_absen()
     {
         $this->load->view('employee/tambah_absen');
     }
-
     public function history()
     {
         $this->load->model('Absensi_model');
@@ -33,12 +73,14 @@ class Employee extends CI_Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $current_datetime = date('Y-m-d H:i:s');
+        $id_karyawan = $this->session->userdata('id');
 
         $data = [
+            'id_karyawan' => $id_karyawan,
             'kegiatan' => $this->input->post('kegiatan'),
             'date' => $current_datetime,
             'jam_masuk' => $current_datetime,
-            'jam_pulang' => $current_datetime,
+            'jam_pulang' => '00:00:00',
         ];
 
         $this->load->model('Absensi_model');
@@ -59,10 +101,9 @@ class Employee extends CI_Controller
     {
         $id_karyawan = $this->session->userdata('id');
         $data = [
-            'id_karyawan' => $id_karyawan,
             'kegiatan' => $this->input->post('kegiatan'),
         ];
-        $eksekusi = $this->m_model->update_data('absensi', $data, [
+        $eksekusi = $this->m_model->update('absensi', $data, [
             'id' => $this->input->post('id'),
         ]);
         if ($eksekusi) {
@@ -80,7 +121,14 @@ class Employee extends CI_Controller
 
     public function profil()
     {
-        $this->load->view('employee/profil');
+        if ($this->session->userdata('id')) {
+            $user_id = $this->session->userdata('id');
+            $data['user'] = $this->User_model->getUserById($user_id);
+
+            $this->load->view('employee/profil', $data);
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function izin()
@@ -90,22 +138,101 @@ class Employee extends CI_Controller
 
     public function simpan_izin()
     {
-        // Tangkap data yang dikirimkan melalui POST
         $keterangan_izin = $this->input->post('keterangan');
 
-        // Load model yang diperlukan untuk menyimpan data izin
-        $this->load->model('Izin_model'); // Gantilah dengan model yang sesuai
+        $this->load->model('Izin_model');
 
-        // Siapkan data izin yang akan disimpan
         $data = [
-            'keterangan_izin' => $keterangan_izin,
-            // Kolom lainnya tidak perlu diisi atau dapat diisi dengan nilai default
+            'id_karyawan' => $id_karyawan,
+            'kegiatan' => '-',
+            'status' => 'true',
+            'keterangan_izin' => $this->input->post('keterangan_izin'),
+            'jam_masuk' => '00:00:00', // Mengosongkan jam_masuk
+            'jam_pulang' => '00:00:00', // Mengosongkan jam_pulang
         ];
 
-        // Panggil model untuk menyimpan data izin
         $this->Izin_model->simpanIzin($data);
 
-        // Setelah selesai, Anda bisa mengarahkan pengguna kembali ke halaman lain, misalnya halaman "history" atau "profil."
-        redirect('employee/history'); // Gantilah dengan halaman tujuan yang sesuai
+        redirect('employee/history');
+    }
+
+    public function akun()
+    {
+        if ($this->session->userdata('id')) {
+            $user_id = $this->session->userdata('id');
+            $data['user'] = $this->User_model->getUserById($user_id);
+
+            $this->load->view('employee/akun', $data);
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function aksi_ubah_akun()
+    {
+        $foto = $this->upload_image_karyawan('foto');
+        if ($foto[0] == false) {
+            $password_baru = $this->input->post('password_baru');
+            $konfirmasi_password = $this->input->post('konfirmasi_password');
+            $email = $this->input->post('email');
+            $username = $this->input->post('username');
+            $data = [
+                'foto' => 'User.png',
+                'email' => $email,
+                'username' => $username,
+            ];
+            if (!empty($password_baru)) {
+                if ($password_baru === $konfirmasi_password) {
+                    $data['password'] = md5($password_baru);
+                } else {
+                    $this->session->set_flashdata(
+                        'message',
+                        'Password baru dan Konfirmasi password harus sama'
+                    );
+                    redirect(base_url('employee/akun'));
+                }
+            }
+            $this->session->set_userdata($data);
+            $update_result = $this->m_model->update('user', $data, [
+                'id' => $this->session->userdata('id'),
+            ]);
+
+            if ($update_result) {
+                redirect(base_url('employee/akun'));
+            } else {
+                redirect(base_url('employee/akun'));
+            }
+        } else {
+            $password_baru = $this->input->post('password_baru');
+            $konfirmasi_password = $this->input->post('konfirmasi_password');
+            $email = $this->input->post('email');
+            $username = $this->input->post('username');
+            $data = [
+                'foto' => $foto[1],
+                'email' => $email,
+                'username' => $username,
+            ];
+            if (!empty($password_baru)) {
+                if ($password_baru === $konfirmasi_password) {
+                    $data['password'] = md5($password_baru);
+                } else {
+                    $this->session->set_flashdata(
+                        'message',
+                        'Password baru dan Konfirmasi password harus sama'
+                    );
+                    redirect(base_url('admin/akun'));
+                }
+            }
+            $this->session->set_userdata($data);
+            $update_result = $this->m_model->update('user', $data, [
+                'id' => $this->session->userdata('id'),
+            ]);
+
+            if ($update_result) {
+                redirect(base_url('employee/akun'));
+            } else {
+                redirect(base_url('employee/akun'));
+            }
+        }
     }
 }

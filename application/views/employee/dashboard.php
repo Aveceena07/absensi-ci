@@ -61,7 +61,8 @@
                     <div class="card-body">
                         <i class="fas fa-check fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Masuk</h6>
-                        <h1>10</h1>
+                        <!-- <h1>10</h1> -->
+                        <h1><?php echo $jumlah_masuk; ?></h1>
                     </div>
                 </div>
             </div>
@@ -70,7 +71,8 @@
                     <div class="card-body">
                         <i class="fas fa-envelope fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Izin</h6>
-                        <h1>2</h1>
+                        <!-- <h1>2</h1> -->
+                        <h1><?php echo $jumlah_izin; ?></h1>
                     </div>
                 </div>
             </div>
@@ -98,9 +100,42 @@
                 </tr>
             </thead>
             <tbody>
+                <?php $i = 1; ?>
+                <?php foreach ($absensi as $row): ?>
                 <tr>
-
+                    <td><span class="number"><?php echo $i; ?></span></td>
+                    <td><?php echo $row['kegiatan']; ?></td>
+                    <td><?php echo $row['date']; ?></td>
+                    <td><?php echo $row['jam_masuk']; ?></td>
+                    <td>
+                        <span id="jam-pulang-<?php echo $i; ?>">
+                            <?php echo $row['jam_pulang']; ?>
+                        </span>
+                    </td>
+                    <td>
+                        <?php if (!empty($row['keterangan_izin'])): ?>
+                        <?php echo $row['keterangan_izin']; ?>
+                        <?php else: ?>
+                        <?php echo $row['kegiatan']; ?>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <a href="javascript:setHomeTime(<?php echo $i; ?>);" class="btn btn-success <?php echo !empty(
+    $row['keterangan_izin']
+)
+    ? 'disabled'
+    : ''; ?>">
+                            <i class="fa-solid fa-house"></i>
+                        </a>
+                    </td>
+                    <td><a href="<?php echo base_url('employee/update_absen/') .
+                        $row['id']; ?>" type="button" class="btn btn-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a> |
+                        <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                 </tr>
+                <?php $i++; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

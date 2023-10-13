@@ -23,7 +23,7 @@
             <h3>Izin</h3>
             <br>
             <label for="Keterangan" class="form-label">Keterangan :</label>
-            <textarea class="form-control" aria-label="With textarea" name="keterangan" required></textarea>
+            <textarea class="form-control" aria-label="With textarea" name="keterangan_izin" required></textarea>
             <button type="submit" class="btn btn-success mt-4">Izin</button>
         </form>
     </div>

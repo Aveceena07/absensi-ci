@@ -63,6 +63,7 @@
                         <?php echo $row['kegiatan']; ?>
                         <?php endif; ?>
                     </td>
+
                     <td>
                         <a href="javascript:setHomeTime(<?php echo $i; ?>);"
                             class="btn btn-success <?php echo !empty(
