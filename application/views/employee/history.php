@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -65,26 +67,43 @@
                     </td>
 
                     <td>
-                        <a href="javascript:setHomeTime(<?php echo $i; ?>);"
-                            class="btn btn-success <?php echo !empty(
-                                $row['keterangan_izin']
-                            )
-                                ? 'disabled'
-                                : ''; ?>">
+                        <a href="javascript:setHomeTime(<?php echo $i; ?>);" class="btn btn-success <?php echo !empty(
+    $row['keterangan_izin']
+)
+    ? 'disabled'
+    : ''; ?>">
                             <i class="fa-solid fa-house"></i>
                         </a>
                     </td>
-                    <td><a href="<?php echo base_url('employee/update_absen/') .
-                        $row['id']; ?>" type="button" class="btn btn-warning">
+                    <td>
+                        <?php if (!empty($row['keterangan_izin'])): ?>
+                        <!-- Tambahkan parameter jenis=izin ke URL saat keterangan izin -->
+                        <a href="<?php echo base_url('employee/update_izin/') .
+                            $row[
+                                'id'
+                            ]; ?>" type="button" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a> |
-                        <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        <?php else: ?>
+                        <!-- Tambahkan parameter jenis=masuk ke URL saat keterangan masuk -->
+                        <a href="<?php echo base_url('employee/update_absen/') .
+                            $row[
+                                'id'
+                            ]; ?>" type="button" class="btn btn-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a> |
+                        <?php endif; ?>
+                        <button type="button" class="btn btn-danger" onclick="hapus(<?php echo $row[
+                            'id'
+                        ]; ?>)"><i class="fa-solid fa-trash"></i></button>
+                    </td>
                 </tr>
                 <?php $i++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+
     <script>
     function setHomeTime(row) {
         var jamPulangElement = document.getElementById('jam-pulang-' + row);
@@ -137,6 +156,26 @@
     });
     </script>
 
+    <script>
+    function hapus(id) {
+        Swal.fire({
+            title: 'Yakin Di Hapus?',
+            text: "Anda tidak dapat mengembalikannya!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#198754',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "<?php echo base_url(
+                    'employee/hapus/'
+                ); ?>" + id;
+            }
+        });
+    }
+    </script>
 
 </body>
 

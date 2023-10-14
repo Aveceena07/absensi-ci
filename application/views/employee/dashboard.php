@@ -62,7 +62,7 @@
                         <i class="fas fa-check fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Masuk</h6>
                         <!-- <h1>10</h1> -->
-                        <h1><?php echo $jumlah_masuk; ?></h1>
+                        <h1><?php echo $total_absen; ?></h1>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                         <i class="fas fa-envelope fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Izin</h6>
                         <!-- <h1>2</h1> -->
-                        <h1><?php echo $jumlah_izin; ?></h1>
+                        <h1><?php echo $total_izin; ?> </h1>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     <div class="card-body">
                         <i class="fa-solid fa-calculator fa-4x icon float-end"></i>
                         <h6 class="card-title">Total</h6>
-                        <h1>2</h1>
+                        <h1><?php echo $absensi; ?></h1>
                     </div>
                 </div>
             </div>
@@ -95,8 +95,6 @@
                     <th scope="col">Jam Masuk</th>
                     <th scope="col">Jam Pulang</th>
                     <th scope="col">Keterangan</th>
-                    <th scope="col">Pulang</th>
-                    <th scope="col text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -119,23 +117,9 @@
                         <?php echo $row['kegiatan']; ?>
                         <?php endif; ?>
                     </td>
-                    <td>
-                        <a href="javascript:setHomeTime(<?php echo $i; ?>);" class="btn btn-success <?php echo !empty(
-    $row['keterangan_izin']
-)
-    ? 'disabled'
-    : ''; ?>">
-                            <i class="fa-solid fa-house"></i>
-                        </a>
-                    </td>
-                    <td><a href="<?php echo base_url('employee/update_absen/') .
-                        $row['id']; ?>" type="button" class="btn btn-warning">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a> |
-                        <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                </tr>
-                <?php $i++; ?>
-                <?php endforeach; ?>
+
+                    <?php $i++; ?>
+                    <?php endforeach; ?>
             </tbody>
         </table>
     </div>

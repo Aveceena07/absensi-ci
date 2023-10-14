@@ -18,6 +18,33 @@ class M_model extends CI_Model
         return $data;
     }
 
+    public function cek_izin($id_karyawan, $tanggal)
+    {
+        $this->db->where('id_karyawan', $id_karyawan);
+        $this->db->where('date', $tanggal);
+        $this->db->where('status', 'true'); // Hanya mencari entri dengan status izin
+        $query = $this->db->get('absensi');
+
+        if ($query->num_rows() > 0) {
+            return true; // Jika sudah ada entri izin untuk karyawan dan tanggal tertentu
+        } else {
+            return false; // Jika belum ada entri izin untuk karyawan dan tanggal tertentu
+        }
+    }
+
+    public function cek_absen($id_karyawan, $tanggal)
+    {
+        $this->db->where('id_karyawan', $id_karyawan);
+        $this->db->where('date', $tanggal);
+        $query = $this->db->get('absensi');
+
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function tambah_data($table, $data)
     {
         $this->db->insert($table, $data);
@@ -29,10 +56,26 @@ class M_model extends CI_Model
         return $data;
     }
 
+    function get_izin($table, $id_karyawan)
+    {
+        return $this->db
+            ->where('id_karyawan', $id_karyawan)
+            ->where('kegiatan', '-')
+            ->get($table);
+    }
+
     public function update($table, $data, $where)
     {
         $data = $this->db->update($table, $data, $where);
         return $this->db->affected_rows();
+    }
+
+    function get_absen($table, $id_karyawan)
+    {
+        return $this->db
+            ->where('id_karyawan', $id_karyawan)
+            ->where('keterangan_izin', 'masuk')
+            ->get($table);
     }
 
     public function ubah_data($table, $data, $where)
@@ -40,94 +83,10 @@ class M_model extends CI_Model
         $data = $this->db->update($table, $data, $where);
         return $this->db->affected_rows();
     }
-
-    public function get_siswa_foto_by_id($id_siswa)
+    function get_absensi_by_karyawan($id_karyawan)
     {
-        $this->db->select('foto');
-        $this->db->from('siswa');
-        $this->db->where('id_siswa', $id_siswa);
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            $result = $query->row();
-            return $result->foto;
-        } else {
-            return false;
-        }
-    }
-
-    public function getDataPembayaran()
-    {
-        $this->db->select(
-            'pembayaran.id, pembayaran.jenis_pembayaran, pembayaran.total_pembayaran, siswa.nama_siswa, kelas.tingkat_kelas, kelas.jurusan_kelas'
-        );
-        $this->db->from('pembayaran');
-        $this->db->join(
-            'siswa',
-            'siswa.id_siswa = pembayaran.id_siswa',
-            'left'
-        );
-        $this->db->join('kelas', 'siswa.id_kelas = kelas.id', 'left');
-        $query = $this->db->get();
-
-        return $query->result();
-    }
-    public function getDataSiswa()
-    {
-        $this->db->select(
-            'siswa.id_siswa, siswa.foto, siswa.nama_siswa, siswa.nisn, siswa.gender, kelas.tingkat_kelas, kelas.jurusan_kelas'
-        );
-        $this->db->from('siswa');
-        $this->db->join('kelas', 'siswa.id_kelas = kelas.id', 'left');
-        $query = $this->db->get();
-
-        return $query->result();
-    }
-
-    public function get_by_nisn($nisn)
-    {
-        $this->db->select('id_siswa');
-        $this->db->from('siswa');
-        $this->db->where('nisn', $nisn);
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            $result = $query->row();
-            return $result->id_siswa;
-        } else {
-            return false;
-        }
-    }
-
-    public function getKelasByTingkatJurusan($tingkat_kelas, $jurusan_kelas)
-    {
-        $this->db->select('id');
-        $this->db->where('tingkat_kelas', $tingkat_kelas);
-        $this->db->where('jurusan_kelas', $jurusan_kelas);
-        $query = $this->db->get('kelas');
-
-        if ($query->num_rows() > 0) {
-            $row = $query->row();
-            return $row->id;
-        } else {
-            return false;
-        }
-    }
-
-    // Fungsi untuk mengambil nama mapel berdasarkan id_mapel
-    public function get_mapel_by_id($id_mapel)
-    {
-        // Gantilah 'mapel' dengan nama tabel mapel Anda
-        $this->db->select('nama_mapel');
-        $this->db->where('id', $id_mapel);
-        $query = $this->db->get('mapel');
-
-        // Periksa apakah query berhasil
-        if ($query->num_rows() > 0) {
-            return $query->row(); // Mengembalikan hasil query
-        } else {
-            return null; // Jika tidak ada data yang ditemukan
-        }
+        $this->db->where('id_karyawan', $id_karyawan);
+        return $this->db->get('absensi')->result();
     }
 }
 
