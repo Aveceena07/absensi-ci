@@ -7,6 +7,8 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->model('User_model');
+        $this->load->model('Absensi_model');
+        $this->load->model('m_model');
         $this->load->library('form_validation');
         $this->load->library('upload');
     }

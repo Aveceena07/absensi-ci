@@ -74,6 +74,7 @@ class Employee extends CI_Controller
     {
         $this->load->view('employee/tambah_absen');
     }
+
     public function history()
     {
         $this->load->model('Absensi_model');
@@ -83,8 +84,12 @@ class Employee extends CI_Controller
 
     public function save_absensi()
     {
+        // Atur zona waktu ke Asia/Jakarta (WIB)
+        date_default_timezone_set('Asia/Jakarta');
+
         $id_karyawan = $this->session->userdata('id');
         $tanggal_sekarang = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $jam_masuk = date('H:i:s'); // Mendapatkan jam saat ini di WIB
 
         // Cek apakah sudah melakukan absen hari ini
         $is_already_absent = $this->m_model->cek_absen(
@@ -109,19 +114,45 @@ class Employee extends CI_Controller
                 'Anda sudah mengajukan izin hari ini.'
             );
         } else {
+            $keterangan_izin = !empty($row['keterangan_izin']) ?: 'masuk';
             $data = [
                 'id_karyawan' => $id_karyawan,
                 'kegiatan' => $this->input->post('kegiatan'),
                 'status' => 'false',
                 'keterangan_izin' => 'masuk',
-                'jam_pulang' => '00:00:00', // Mengosongkan jam_pulang
-                'date' => $tanggal_sekarang, // Menyimpan tanggal absen
+                'jam_masuk' => $jam_masuk,
+                'jam_pulang' => '00:00:00',
+                'date' => $tanggal_sekarang,
             ];
             $this->m_model->tambah_data('absensi', $data);
             $this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
         }
 
         redirect(base_url('employee/history'));
+    }
+
+    public function pulang($absen_id)
+    {
+        if ($this->session->userdata('role') === 'karyawan') {
+            $this->karyawan_model->setAbsensiPulang($absen_id);
+            redirect('karyawan/history');
+        } else {
+            redirect('auth');
+        }
+    }
+    public function batal_pulang($absen_id)
+    {
+        if ($this->session->userdata('role') === 'karyawan') {
+            $this->karyawan_model->batalPulang($absen_id);
+
+            // Set pesan sukses
+            $this->session->set_flashdata('success', 'Batal Pulang berhasil.');
+
+            // Redirect kembali ke halaman riwayat absen
+            redirect('karyawan/history');
+        } else {
+            redirect('auth');
+        }
     }
 
     public function update_absen($id)
@@ -134,46 +165,27 @@ class Employee extends CI_Controller
 
     public function aksi_update_absen()
     {
-        $id_karyawan = $this->session->userdata('id');
-        $tanggal_sekarang = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $id = $this->input->post('id'); // Dapatkan ID absensi yang akan diubah
+        $data = [
+            'kegiatan' => $this->input->post('kegiatan'), // Ambil data kegiatan dari form
+        ];
 
-        // Cek apakah sudah melakukan absen hari ini
-        $is_already_absent = $this->m_model->cek_absen(
-            $id_karyawan,
-            $tanggal_sekarang
-        );
+        // Panggil fungsi untuk mengupdate data absensi berdasarkan ID
+        $eksekusi = $this->m_model->update('absensi', $data, ['id' => $id]);
 
-        // Cek apakah sudah melakukan izin hari ini
-        $is_already_izin = $this->m_model->cek_izin(
-            $id_karyawan,
-            $tanggal_sekarang
-        );
-
-        if ($is_already_absent) {
+        if ($eksekusi) {
             $this->session->set_flashdata(
-                'gagal_izin',
-                'Anda sudah melakukan absen hari ini.'
+                'berhasil_update',
+                'Berhasil mengubah kegiatan.'
             );
-        } elseif ($is_already_izin) {
-            $this->session->set_flashdata(
-                'gagal_izin',
-                'Anda sudah mengajukan izin hari ini.'
-            );
+            redirect(base_url('employee/history'));
         } else {
-            $data = [
-                'id_karyawan' => $id_karyawan,
-                'kegiatan' => '-',
-                'status' => 'true',
-                'keterangan_izin' => $this->input->post('keterangan_izin'),
-                'jam_masuk' => '00:00:00', // Mengosongkan jam_masuk
-                'jam_pulang' => '00:00:00', // Mengosongkan jam_pulang
-                'date' => $tanggal_sekarang, // Menyimpan tanggal izin
-            ];
-            $this->m_model->tambah_data('absensi', $data);
-            $this->session->set_flashdata('berhasil_izin', 'Berhasil Izin.');
+            $this->session->set_flashdata(
+                'gagal_update',
+                'Gagal mengubah kegiatan.'
+            );
+            redirect(base_url('employee/history'));
         }
-
-        redirect(base_url('karyawan/absen'));
     }
 
     public function profil()
@@ -184,13 +196,33 @@ class Employee extends CI_Controller
 
             $this->load->view('employee/profil', $data);
         } else {
-            redirect('auth/login');
+            redirect('auth/register');
         }
     }
 
     public function izin()
     {
         $this->load->view('employee/izin');
+    }
+
+    public function simpan_izin()
+    {
+        $id_karyawan = $this->session->userdata('id');
+        $tanggal_sekarang = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $keterangan_izin = $this->input->post('keterangan');
+
+        $data = [
+            'id_karyawan' => $id_karyawan,
+            'status' => 'true',
+            'keterangan_izin' => 'sakit',
+            'date' => $tanggal_sekarang,
+            'jam_masuk' => '-', // Mengosongkan jam_masuk
+            'jam_pulang' => '-', // Mengosongkan jam_pulang
+        ];
+
+        $this->m_model->tambah_data('absensi', $data);
+
+        redirect('employee/history');
     }
 
     public function aksi_update_izin()
@@ -204,13 +236,13 @@ class Employee extends CI_Controller
         ]);
         if ($eksekusi) {
             $this->session->set_flashdata(
-                'berhasil_update',
-                'Berhasil mengubah keterangan izin'
+                'berhasil_update_izin',
+                'Berhasil mengubah keterangan'
             );
             redirect(base_url('employee/history'));
         } else {
             redirect(
-                base_url('employee/update_absen' . $this->input->post('id'))
+                base_url('employee/update_izin/' . $this->input->post('id'))
             );
         }
     }
@@ -221,26 +253,6 @@ class Employee extends CI_Controller
             ->get_by_id('absensi', 'id', $id)
             ->result();
         $this->load->view('employee/update_izin', $data);
-    }
-
-    public function simpan_izin()
-    {
-        $keterangan_izin = $this->input->post('keterangan');
-
-        $this->load->model('Izin_model');
-
-        $data = [
-            'id_karyawan' => $id_karyawan,
-            'kegiatan' => '-',
-            'status' => 'true',
-            'keterangan_izin' => $this->input->post('keterangan_izin'),
-            'jam_masuk' => '00:00:00', // Mengosongkan jam_masuk
-            'jam_pulang' => '00:00:00', // Mengosongkan jam_pulang
-        ];
-
-        $this->Izin_model->simpanIzin($data);
-
-        redirect('employee/history');
     }
 
     public function akun()

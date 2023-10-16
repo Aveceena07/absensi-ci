@@ -19,7 +19,9 @@
 <body>
     <?php $this->load->view('sidebar_employee'); ?>
     <div class="kegiatan mb-3">
-        <form method="post" action="<?= base_url('employee/simpan_izin') ?>">
+        <form method="post" enctype="multipart/form-data" action="<?= base_url(
+            'employee/simpan_izin'
+        ) ?>">
             <h3>Izin</h3>
             <br>
             <label for="Keterangan" class="form-label">Keterangan :</label>

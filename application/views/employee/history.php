@@ -54,9 +54,7 @@
                     <td><?php echo $row['date']; ?></td>
                     <td><?php echo $row['jam_masuk']; ?></td>
                     <td>
-                        <span id="jam-pulang-<?php echo $i; ?>">
-                            <?php echo $row['jam_pulang']; ?>
-                        </span>
+                        <?php echo $row['jam_pulang']; ?>
                     </td>
                     <td>
                         <?php if (!empty($row['keterangan_izin'])): ?>
@@ -65,28 +63,31 @@
                         <?php echo $row['kegiatan']; ?>
                         <?php endif; ?>
                     </td>
-
                     <td>
-                        <a href="javascript:setHomeTime(<?php echo $i; ?>);" class="btn btn-success <?php echo !empty(
-    $row['keterangan_izin']
-)
-    ? 'disabled'
-    : ''; ?>">
+                        <?php if (empty($row['jam_pulang'])): ?>
+                        <button type="button" class="btn btn-success" disabled>
+                            <i class="fa-solid fa-house"></i>
+                        </button>
+                        <?php else: ?>
+                        <a href="javascript:setHomeTime(<?php echo $row[
+                            'id'
+                        ]; ?>);" data-id="<?php echo $row[
+    'id'
+]; ?>" class="btn btn-success">
                             <i class="fa-solid fa-house"></i>
                         </a>
+                        <?php endif; ?>
                     </td>
+
+
                     <td>
                         <?php if (!empty($row['keterangan_izin'])): ?>
                         <!-- Tambahkan parameter jenis=izin ke URL saat keterangan izin -->
-                        <a href="<?php echo base_url('employee/update_izin/') .
-                            $row[
-                                'id'
-                            ]; ?>" type="button" class="btn btn-warning">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a> |
-                        <?php else: ?>
-                        <!-- Tambahkan parameter jenis=masuk ke URL saat keterangan masuk -->
-                        <a href="<?php echo base_url('employee/update_absen/') .
+                        <a href="<?php echo base_url(
+                            !empty($row['kegiatan'])
+                                ? 'employee/update_absen/'
+                                : 'employee/update_izin/'
+                        ) .
                             $row[
                                 'id'
                             ]; ?>" type="button" class="btn btn-warning">
@@ -97,64 +98,49 @@
                             'id'
                         ]; ?>)"><i class="fa-solid fa-trash"></i></button>
                     </td>
+
                 </tr>
                 <?php $i++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-
+    <!-- ... -->
     <script>
-    function setHomeTime(row) {
-        var jamPulangElement = document.getElementById('jam-pulang-' + row);
-        var pulangButton = document.getElementById('pulangBtn-' + row);
-
-        var currentTime = new Date();
-        var hours = currentTime.getHours();
-        var minutes = currentTime.getMinutes();
-        var seconds = currentTime.getSeconds();
-        var formattedTime = (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (
-            seconds < 10 ? "0" : "") + seconds;
-
-        jamPulangElement.textContent = formattedTime;
-
-        // Simpan waktu di localStorage
-        localStorage.setItem('jamPulang-' + row, formattedTime);
-
-        // Nonaktifkan tombol home setelah ditekan
-        var homeButton = document.querySelector('a[href="javascript:setHomeTime(' + row + ');"]');
-        homeButton.classList.add('disabled');
-
-        // Nonaktifkan tombol "Pulang" setelah tombol "Home" ditekan
-        pulangButton.classList.add('disabled');
-        pulangButton.onclick = null;
-    }
-
-    // Cek apakah waktu tersimpan di localStorage saat halaman dimuat
-    window.addEventListener('load', function() {
-        var rows = document.querySelectorAll('[id^=jam-pulang-]');
-
-        rows.forEach(function(jamPulangElement) {
-            var row = jamPulangElement.getAttribute('id').replace('jam-pulang-', '');
-            var storedTime = localStorage.getItem('jamPulang-' + row);
-
-            if (storedTime) {
-                jamPulangElement.textContent = storedTime;
-
-                // Nonaktifkan tombol "Pulang" jika tombol "Home" sudah ditekan
-                var pulangButton = document.getElementById('pulangBtn-' + row);
-                pulangButton.classList.add('disabled');
-                pulangButton.onclick = null;
-
-                // Nonaktifkan tombol "Home" jika tombol "Home" sudah ditekan
-                var homeButton = document.querySelector('a[href="javascript:setHomeTime(' + row +
-                    ');"]');
-                homeButton.classList.add('disabled');
-                homeButton.onclick = null;
+    function setHomeTime(id) {
+        Swal.fire({
+            title: 'Konfirmasi Jam Pulang',
+            text: 'Anda yakin ingin menandai jam pulang?',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#198754',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Pulang!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Kirim permintaan AJAX ke server
+                $.ajax({
+                    url: '<?php echo base_url(
+                        'employee/set_home_time/'
+                    ); ?>' + id,
+                    type: 'POST',
+                    success: function(response) {
+                        if (response === 'success') {
+                            // Perbarui tombol "Home" menjadi dinonaktif dan hapus tautan
+                            const homeButton = document.querySelector('[data-id="' + id + '"]');
+                            if (homeButton) {
+                                homeButton.remove();
+                            }
+                        }
+                    }
+                });
             }
         });
-    });
+    }
     </script>
+
+    <!-- ... -->
+
 
     <script>
     function hapus(id) {

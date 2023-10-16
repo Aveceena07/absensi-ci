@@ -324,7 +324,7 @@ body.dark {
     <nav class="navbar">
         <div class="logo_item">
             <i class="bx bx-menu" id="sidebarOpen"></i>
-            Admin
+            Absen Karyawan
         </div>
 
         <div class="search_bar">
@@ -333,9 +333,10 @@ body.dark {
 
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
-            <i class='bx bx-sun' id="darkLight"></i>
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
-                alt="" class="profile" />
+            <a href="<?php echo base_url('employee/profil'); ?>">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
+                    alt="" class="profile" />
+            </a>
         </div>
     </nav>
 
@@ -355,8 +356,26 @@ body.dark {
 
                     <ul class="menu_items submenu">
                         <a href="<?php echo base_url(
-                            'admin/admin'
-                        ); ?>" class="nav_link sublink">Admin</a>
+                            'admin/daftar_karyawan'
+                        ); ?>" class="nav_link sublink">Daftar Karyawan</a>
+                    </ul>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
+                            'admin/rekap_minggu'
+                        ); ?>" class="nav_link sublink">Rekap Mingguan</a>
+                    </ul>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
+                            'admin/rekap_bulanan'
+                        ); ?>" class="nav_link sublink">Rekap Bulanan</a>
+                    </ul>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
+                            'admin/rekap_harian'
+                        ); ?>" class="nav_link sublink">Rekap Harian</a>
                     </ul>
                 </li>
 
@@ -367,7 +386,7 @@ body.dark {
                         <i class='bx bx-log-in'></i>
                     </div>
                     <div class="bottom collapse_sidebar">
-                        <span> Log out</span>
+                        <span> Tutup </span>
                         <i class='bx bx-log-out'></i>
                     </div>
                 </div>
@@ -376,7 +395,6 @@ body.dark {
     <!-- JavaScript -->
     <script>
     const body = document.querySelector("body");
-    const darkLight = document.querySelector("#darkLight");
     const sidebar = document.querySelector(".sidebar");
     const submenuItems = document.querySelectorAll(".submenu_item");
     const sidebarOpen = document.querySelector("#sidebarOpen");
@@ -399,16 +417,6 @@ body.dark {
     sidebar.addEventListener("mouseleave", () => {
         if (sidebar.classList.contains("hoverable")) {
             sidebar.classList.add("close");
-        }
-    });
-
-    darkLight.addEventListener("click", () => {
-        body.classList.toggle("dark");
-        if (body.classList.contains("dark")) {
-            document.setI
-            darkLight.classList.replace("bx-sun", "bx-moon");
-        } else {
-            darkLight.classList.replace("bx-moon", "bx-sun");
         }
     });
 

@@ -88,6 +88,34 @@ class M_model extends CI_Model
         $this->db->where('id_karyawan', $id_karyawan);
         return $this->db->get('absensi')->result();
     }
+
+    public function cek($table, $where)
+    {
+        return $this->db->get_where($table, $where);
+    }
+
+    public function getAbsensiLast7Days()
+    {
+        $this->load->database();
+        $end_tanggal = date('Y-m-d');
+        $start_tanggal = date(
+            'Y-m-d',
+            strtotime('-7 days', strtotime($end_tanggal))
+        );
+        $query = $this->db
+            ->select(
+                'tanggal, kegiatan, jam_masuk, jam_pulang, keterangan_izin, status, COUNT(*) AS total_absences'
+            )
+            ->from('absensi')
+            ->where('tanggal >=', $start_tanggal)
+            ->where('tanggal <=', $end_tanggal)
+            ->group_by(
+                'tanggal, kegiatan, jam_masuk, jam_pulang, keterangan_izin, status'
+            )
+            ->get();
+
+        return $query->result_array();
+    }
 }
 
 ?>

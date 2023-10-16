@@ -24,7 +24,7 @@
             'employee/aksi_update_izin'
         ) ?>" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo $absen->id; ?>">
-            <h3>Ubah</h3>
+            <h3>Ubah Keterangan</h3>
             <br>
             <!--  -->
             <label for="Kegiatan" class="form-label">Keterangan :</label>
