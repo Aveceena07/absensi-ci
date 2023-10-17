@@ -102,13 +102,13 @@ class Auth extends CI_Controller
                     $this->session->set_userdata('id', $user->id);
 
                     if ($user->role == 'admin') {
-                        redirect('admin/admin');
+                        redirect('admin/dashboard');
                     } elseif ($user->role == 'karyawan') {
                         redirect('employee/dashboard');
                     }
                 } else {
                     $data['error'] = 'Email or password is incorrect';
-                    $this->load->view('auth', $data);
+                    $this->load->view('auth/login', $data);
                 }
             }
         }

@@ -50,24 +50,18 @@ class Employee extends CI_Controller
     public function dashboard()
     {
         $id_karyawan = $this->session->userdata('id');
-
-        $data['absensi_count'] = $this->m_model->get_absensi_by_karyawan(
+        $data['absensi'] = $this->m_model->get_absensi_by_karyawan(
             $id_karyawan
         );
-        $data['absensi'] = count($data['absensi_count']);
+        $data['absensi_count'] = count($data['absensi']);
         $data['total_absen'] = $this->m_model
             ->get_absen('absensi', $this->session->userdata('id'))
             ->num_rows();
         $data['total_izin'] = $this->m_model
             ->get_izin('absensi', $this->session->userdata('id'))
             ->num_rows();
-        $this->load->model('Absensi_model');
-        $data['absensi'] = $this->Absensi_model->getAbsensi();
+
         $this->load->view('employee/dashboard', $data);
-        $data['absensi'] = $this->Absensi_model->getAbsensi();
-        $data['jumlah_masuk'] = $this->Absensi_model
-            ->get_data('absensi')
-            ->num_rows();
     }
 
     public function tambah_absen()
@@ -131,28 +125,16 @@ class Employee extends CI_Controller
         redirect(base_url('employee/history'));
     }
 
-    public function pulang($absen_id)
+    public function aksi_pulang($id)
     {
-        if ($this->session->userdata('role') === 'karyawan') {
-            $this->karyawan_model->setAbsensiPulang($absen_id);
-            redirect('karyawan/history');
-        } else {
-            redirect('auth');
-        }
-    }
-    public function batal_pulang($absen_id)
-    {
-        if ($this->session->userdata('role') === 'karyawan') {
-            $this->karyawan_model->batalPulang($absen_id);
-
-            // Set pesan sukses
-            $this->session->set_flashdata('success', 'Batal Pulang berhasil.');
-
-            // Redirect kembali ke halaman riwayat absen
-            redirect('karyawan/history');
-        } else {
-            redirect('auth');
-        }
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu_sekarang = date('Y-m-d H:i:s');
+        $data = [
+            'jam_pulang' => $waktu_sekarang,
+            'status' => 'true',
+        ];
+        $this->m_model->update('absensi', $data, ['id' => $id]);
+        redirect(base_url('employee/history'));
     }
 
     public function update_absen($id)

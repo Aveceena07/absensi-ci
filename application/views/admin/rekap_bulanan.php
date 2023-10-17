@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -31,6 +34,10 @@ form {
 
 
 @media (max-width: 768px) {
+    form {
+        margin-left: 10%;
+    }
+
     h2 {
         margin-left: 10%;
     }
@@ -43,7 +50,7 @@ form {
 </style>
 
 <body>
-    <h2>Rekap Mingguan</h2>
+    <h2>Rekap Bulanan</h2>
     <?php $this->load->view('sidebar'); ?>
     <form action="<?= base_url('admin/rekap_bulanan') ?>" method="get">
         <div class="form-group">
@@ -63,7 +70,10 @@ form {
                 <option value="12">Desember</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary mt-2">Filter</button>
+        <button type="submit" class="btn btn-success mt-2"><i class="fa-solid fa-filter"></i></button>
+        <a class="exp btn btn-primary mt-2" href="<?= base_url(
+            'admin/export_bulanan'
+        ) ?>"><i class="fa-solid fa-file-export"></i></a>
     </form>
     <table class="table table-light table-hover">
         <thead>

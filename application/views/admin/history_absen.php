@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="path/to/your/custom.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <style>
 h2 {
@@ -17,12 +17,13 @@ h2 {
     margin-left: 29%;
 }
 
-.exp {
+.expo {
+    margin-top: 1%;
     margin-left: 29%;
 }
 
 table {
-    margin-top: 1%;
+    margin-top: 2%;
     margin-left: 29%;
 }
 
@@ -42,16 +43,19 @@ table {
     <?php $this->load->view('sidebar'); ?>
     <div class="comtainer-fluid">
         <div class="col-md-9">
-            <h2>Daftar Karyawan</h2>
-            <a class="exp btn btn-success mb-1" href="<?= base_url(
-                'admin/export_daftar_karyawan'
-            ) ?>"><i class="fa-solid fa-filter"></i></a>
+            <h2>History Absen</h2>
+            <a href="<?= base_url(
+                'admin/export_karyawan'
+            ) ?>" type="button" class="expo btn btn-success"><i class="fa-solid fa-file-export"></i></a>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nama</th>
-                        <th>Email</th>
+                        <th scope="col">No</th>
+                        <th scope="col">Kegiatan</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Jam Masuk</th>
+                        <th scope="col">Jam Pulang</th>
+                        <th scope="col">Keteragan Izin</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,8 +63,11 @@ table {
                     <?php foreach ($absensi as $row): ?>
                     <tr>
                         <td><?php echo $i; ?></td>
-                        <td><?php echo $row->username; ?></td>
-                        <td><?php echo $row->email; ?></td>
+                        <td><?php echo $row->kegiatan; ?></td>
+                        <td><?php echo $row->date; ?></td>
+                        <td><?php echo $row->jam_masuk; ?></td>
+                        <td><?php echo $row->jam_pulang; ?></td>
+                        <td><?php echo $row->keterangan_izin; ?></td>
                     </tr>
                     <?php $i++; ?>
                     <?php endforeach; ?>
@@ -69,7 +76,7 @@ table {
         </div>
     </div>
     <!-- Tambahkan tag-script Anda di sini, seperti JavaScript yang dibutuhkan -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="path/to/your/custom.js"></script>
 </body>
 

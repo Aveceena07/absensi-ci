@@ -68,7 +68,7 @@ class Admin_model extends CI_Model
     public function getExportKaryawan()
     {
         $this->db->select(
-            'absensi.id, user.username, absensi.kegiatan, absensi.tanggal, absensi.jam_masuk, absensi.jam_pulang, absensi.status'
+            'absensi.id, user.username, absensi.kegiatan, absensi.date, absensi.jam_masuk, absensi.jam_pulang, absensi.status'
         );
         $this->db->from('absensi');
         $this->db->join('user', 'user.id = absensi.id_karyawan', 'left');

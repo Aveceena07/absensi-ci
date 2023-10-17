@@ -7,7 +7,7 @@
     <title>Login</title>
 </head>
 <style>
-@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family:Poppins:100,200,300,400,500,600,700,800,900&display=swap');
 
 * {
     margin: 0;
@@ -19,7 +19,7 @@
 section {
     position: relative;
     min-height: 100vh;
-    background-color: #F5F2B1;
+    background-color: #22ABC6;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,49 +28,25 @@ section {
 
 section .container {
     position: relative;
-    width: 800px;
-    height: 500px;
+    max-width: 400px;
+    /* Mengurangi lebar kontainer */
     background: #fff;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-}
-
-section .container .user {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     display: flex;
-}
-
-section .container .user .imgBx {
-    position: relative;
-    width: 50%;
-    height: 100%;
-    background: #ff0;
-    transition: 0.5s;
-}
-
-section .container .user .imgBx img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    flex-direction: column;
+    /* Mengatur elemen di dalam kontainer secara vertikal */
+    align-items: center;
+    /* Mengatur elemen di dalam kontainer di tengah */
 }
 
 section .container .user .formBx {
-    position: relative;
-    width: 50%;
-    height: 100%;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    transition: 0.5s;
+    width: 100%;
+    /* Mengisi seluruh lebar kontainer */
+    padding: 40px 20px;
+    /* Mengurangi padding atas dan bawah */
+    text-align: center;
+    /* Mengatur teks di tengah horizontal */
 }
 
 section .container .user .formBx form h2 {
@@ -78,16 +54,14 @@ section .container .user .formBx form h2 {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-align: center;
-    width: 100%;
     margin-bottom: 10px;
     color: #555;
 }
 
 section .container .user .formBx form input {
-    position: relative;
     width: 100%;
-    padding: 5px;
+    padding: 10px;
+    /* Meningkatkan padding input */
     background: #f5f5f5;
     color: #333;
     border: none;
@@ -111,59 +85,18 @@ section .container .user .formBx form input[type='submit'] {
 }
 
 section .container .user .formBx form .signup {
-    position: relative;
-    margin-top: 20px;
     font-size: 12px;
     letter-spacing: 1px;
     color: #555;
     text-transform: uppercase;
     font-weight: 300;
+    margin-top: 20px;
 }
 
 section .container .user .formBx form .signup a {
     font-weight: 600;
     text-decoration: none;
     color: #677eff;
-}
-
-section .container .signupBx {
-    pointer-events: none;
-}
-
-section .container.active .signupBx {
-    pointer-events: initial;
-}
-
-section .container .signupBx .formBx {
-    left: 100%;
-}
-
-section .container.active .signupBx .formBx {
-    left: 0;
-}
-
-section .container .signupBx .imgBx {
-    left: -100%;
-}
-
-section .container.active .signupBx .imgBx {
-    left: 0%;
-}
-
-section .container .signinBx .formBx {
-    left: 0%;
-}
-
-section .container.active .signinBx .formBx {
-    left: 100%;
-}
-
-section .container .signinBx .imgBx {
-    left: 0%;
-}
-
-section .container.active .signinBx .imgBx {
-    left: -100%;
 }
 
 @media (max-width: 991px) {
@@ -185,9 +118,6 @@ section .container.active .signinBx .imgBx {
     <section>
         <div class="container">
             <div class="user signinBx">
-                <div class="imgBx"><img
-                        src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg"
-                        alt="" /></div>
                 <div class="formBx">
                     <form method="post" action="<?php echo base_url(
                         'auth/aksi_login'

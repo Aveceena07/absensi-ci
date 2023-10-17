@@ -53,15 +53,15 @@
 </style>
 
 <body>
-    <?php $this->load->view('sidebar_employee'); ?>
+    <?php $this->load->view('sidebar'); ?>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-body">
                         <i class="fas fa-check fa-4x icon float-end"></i>
-                        <h6 class="card-title">Jumlah Masuk</h6>
-                        <h1><?php echo $total_absen; ?> Hari</h1>
+                        <h6 class="card-title">Jumlah User</h6>
+                        <h1><?php echo $user; ?></h1>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,8 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <i class="fas fa-envelope fa-4x icon float-end"></i>
-                        <h6 class="card-title">Jumlah Izin</h6>
-                        <h1><?php echo $total_izin; ?> </h1>
+                        <h6 class="card-title">Jumlah Karyawan</h6>
+                        <h1><?php echo $karyawan; ?> </h1>
                     </div>
                 </div>
             </div>
@@ -78,8 +78,8 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <i class="fa-solid fa-calculator fa-4x icon float-end"></i>
-                        <h6 class="card-title">Total</h6>
-                        <h1><?php echo $absensi; ?></h1>
+                        <h6 class="card-title">Total Absen</h6>
+                        <h1><?php echo $absensi_num; ?></h1>
                     </div>
                 </div>
             </div>
@@ -100,19 +100,19 @@
                 <?php foreach ($absensi as $row): ?>
                 <tr>
                     <td><span class="number"><?php echo $i; ?></span></td>
-                    <td><?php echo $row['kegiatan']; ?></td>
-                    <td><?php echo $row['date']; ?></td>
-                    <td><?php echo $row['jam_masuk']; ?></td>
+                    <td><?php echo $row->kegiatan; ?></td>
+                    <td><?php echo $row->date; ?></td>
+                    <td><?php echo $row->jam_masuk; ?></td>
                     <td>
                         <span id="jam-pulang-<?php echo $i; ?>">
-                            <?php echo $row['jam_pulang']; ?>
+                            <?php echo $row->jam_pulang; ?>
                         </span>
                     </td>
                     <td>
-                        <?php if (!empty($row['keterangan_izin'])): ?>
-                        <?php echo $row['keterangan_izin']; ?>
+                        <?php if (!empty($row->keterangan_izin)): ?>
+                        <?php echo $row->keterangan_izin; ?>
                         <?php else: ?>
-                        <?php echo $row['kegiatan']; ?>
+                        <?php echo $row->kegiatan; ?>
                         <?php endif; ?>
                     </td>
 

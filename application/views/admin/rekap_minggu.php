@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -12,6 +15,10 @@
 .table {
     width: 78%;
     margin-top: 40px;
+    margin-left: 285px;
+}
+
+.exp {
     margin-left: 285px;
 }
 
@@ -36,6 +43,9 @@ h2 {
     <h2>Rekap Mingguan</h2>
     <?php $this->load->view('sidebar'); ?>
     <table class="table table-light table-hover">
+        <a class="exp btn btn-primary mb-2" href="<?= base_url(
+            'admin/export_mingguan'
+        ) ?>"><i class="fa-solid fa-file-export"></i></a>
         <thead>
             <tr>
                 <th scope="col">No</th>

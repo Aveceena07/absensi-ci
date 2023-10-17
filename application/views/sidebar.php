@@ -324,7 +324,7 @@ body.dark {
     <nav class="navbar">
         <div class="logo_item">
             <i class="bx bx-menu" id="sidebarOpen"></i>
-            Absen Karyawan
+            Admin
         </div>
 
         <div class="search_bar">
@@ -333,7 +333,7 @@ body.dark {
 
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
-            <a href="<?php echo base_url('employee/profil'); ?>">
+            <a href="<?php echo base_url('admin/profil'); ?>">
                 <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
                     alt="" class="profile" />
             </a>
@@ -353,6 +353,18 @@ body.dark {
                         <span class="navlink">Home</span>
                         <i class="bx bx-chevron-right arrow-left"></i>
                     </div>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
+                            'admin/dashboard'
+                        ); ?>" class="nav_link sublink">Dashboard</a>
+                    </ul>
+
+                    <ul class="menu_items submenu">
+                        <a href="<?php echo base_url(
+                            'admin/history_absen'
+                        ); ?>" class="nav_link sublink">History Absen</a>
+                    </ul>
 
                     <ul class="menu_items submenu">
                         <a href="<?php echo base_url(

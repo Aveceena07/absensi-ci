@@ -64,21 +64,29 @@
                         <?php endif; ?>
                     </td>
                     <td>
-                        <?php if (empty($row['jam_pulang'])): ?>
-                        <button type="button" class="btn btn-success" disabled>
-                            <i class="fa-solid fa-house"></i>
-                        </button>
-                        <?php else: ?>
-                        <a href="javascript:setHomeTime(<?php echo $row[
-                            'id'
-                        ]; ?>);" data-id="<?php echo $row[
-    'id'
-]; ?>" class="btn btn-success">
+                        <?php if ($row['status'] !== 'true'): ?>
+                        <a href="<?php echo base_url(
+                            'employee/aksi_pulang/' . $row['id']
+                        ); ?>" class="btn btn-success">
                             <i class="fa-solid fa-house"></i>
                         </a>
+                        <?php else: ?>
+                        <button type="button" class="btn btn-secondary" disabled>
+                            <i class="fa-solid fa-house"></i>
+                        </button>
                         <?php endif; ?>
                     </td>
+                    <!-- <td>
+                        <?php if ($row->status !== 'true'): ?>
+                        <a href="<?php echo base_url(
+                            'employee/aksi_pulang/' . $row['id']
+                        ); ?>" class="btn btn-success"><i class="fa-solid fa-house"></i></a>
 
+                        <?php else: ?>
+                        <button type="button" class="btn btn-success" disabled ><i
+                                class="fa-solid fa-house"></i></button>
+                        <?php endif; ?>
+                    </td> -->
 
                     <td>
                         <?php if (!empty($row['keterangan_izin'])): ?>
@@ -105,39 +113,6 @@
             </tbody>
         </table>
     </div>
-    <!-- ... -->
-    <script>
-    function setHomeTime(id) {
-        Swal.fire({
-            title: 'Konfirmasi Jam Pulang',
-            text: 'Anda yakin ingin menandai jam pulang?',
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#198754',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Pulang!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Kirim permintaan AJAX ke server
-                $.ajax({
-                    url: '<?php echo base_url(
-                        'employee/set_home_time/'
-                    ); ?>' + id,
-                    type: 'POST',
-                    success: function(response) {
-                        if (response === 'success') {
-                            // Perbarui tombol "Home" menjadi dinonaktif dan hapus tautan
-                            const homeButton = document.querySelector('[data-id="' + id + '"]');
-                            if (homeButton) {
-                                homeButton.remove();
-                            }
-                        }
-                    }
-                });
-            }
-        });
-    }
-    </script>
 
     <!-- ... -->
 
