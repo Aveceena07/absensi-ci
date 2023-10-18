@@ -33,7 +33,12 @@ table {
         margin-left: 10%;
     }
 
+    .expo {
+        margin-left: 10%;
+    }
+
     .table {
+        margin-top: 10px;
         margin-left: 10%;
     }
 }

@@ -71,7 +71,11 @@ class Auth extends CI_Controller
                 $data['role'] = 'admin';
             }
 
+            $data['foto'] = 'User.png';
+
             $this->User_model->registerUser($data);
+
+            $this->session->set_flashdata('success_register', true);
 
             redirect('auth');
         }

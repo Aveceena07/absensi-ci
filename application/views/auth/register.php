@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <style>
 @import url('https://fonts.googleapis.com/css?family:Poppins:100,200,300,400,500,600,700,800,900&display=swap');
@@ -147,6 +149,17 @@ section .container .user .formBx form .signup a {
             </div>
         </div>
     </section>
+    <script>
+    <?php if ($this->session->flashdata('success_register')): ?>
+    Swal.fire({
+        title: 'Registration Successful',
+        text: 'You have successfully registered.',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    <?php endif; ?>
+    </script>
 </body>
 
 </html>

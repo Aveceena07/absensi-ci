@@ -503,12 +503,11 @@ class Admin extends CI_Controller
         $writer->save('php://output');
     }
 
-    public function export_bulanan()
+    public function export_rekap_bulanan()
     {
-        $bulan = $this->input->post('bulan');
-        require_once FCPATH . 'vendor/autoload.php';
-        // date_default_timezone_set('Asia/Jakarta');
-        $date = date('Y-m');
+        // Ambil data rekap bulanan dari model sesuai bulan yang dipilih
+        $bulan = $this->session->flashdata('bulan');
+        $data = $this->m_model->get_bulanan($bulan);
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -540,7 +539,6 @@ class Admin extends CI_Controller
                 ],
             ],
         ];
-
         $style_row = [
             'alignment' => [
                 'vertical' =>
@@ -566,19 +564,20 @@ class Admin extends CI_Controller
             ],
         ];
 
-        $sheet->setCellValue('A1', "REKAP DATA BULANAN ($date)");
-        $sheet->mergeCells('A1:G1');
+        $sheet->setCellValue('A1', 'REKAP BULANAN');
+        $sheet->mergeCells('A1:E1');
         $sheet
             ->getStyle('A1')
             ->getFont()
             ->setBold(true);
 
-        $sheet->setCellValue('A3', 'NO');
-        $sheet->setCellValue('B3', 'NAMA KARYAWAN');
-        $sheet->setCellValue('C3', 'DATE');
+        $sheet->setCellValue('A3', 'ID');
+        $sheet->setCellValue('B3', 'KEGIATAN');
+        $sheet->setCellValue('C3', 'TANGGAL');
         $sheet->setCellValue('D3', 'JAM MASUK');
         $sheet->setCellValue('E3', 'JAM PULANG');
-        $sheet->setCellValue('F3', 'KETERANGAN IZIN');
+        $sheet->setCellValue('F3', 'KETERANGAN');
+        $sheet->setCellValue('G3', 'STATUS');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -586,23 +585,20 @@ class Admin extends CI_Controller
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
 
-        // $where = ['MONTH(date)' => $date];
-        $absensi = $this->m_model->getAbsensiBulan($bulan);
+        $data = $this->m_model->get_bulanan($bulan);
 
         $no = 1;
         $numrow = 4;
-
-        foreach ($absensi as $data) {
-            $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue(
-                'B' . $numrow,
-                $data->nama_depan . ' ' . $data->nama_belakang
-            );
+        foreach ($data as $data) {
+            $sheet->setCellValue('A' . $numrow, $data->id);
+            $sheet->setCellValue('B' . $numrow, $data->kegiatan);
             $sheet->setCellValue('C' . $numrow, $data->date);
             $sheet->setCellValue('D' . $numrow, $data->jam_masuk);
             $sheet->setCellValue('E' . $numrow, $data->jam_pulang);
             $sheet->setCellValue('F' . $numrow, $data->keterangan_izin);
+            $sheet->setCellValue('G' . $numrow, $data->status);
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -610,18 +606,19 @@ class Admin extends CI_Controller
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
 
             $no++;
             $numrow++;
         }
 
         $sheet->getColumnDimension('A')->setWidth(5);
-
         $sheet->getColumnDimension('B')->setWidth(25);
-        $sheet->getColumnDimension('C')->setWidth(25);
-        $sheet->getColumnDimension('D')->setWidth(20);
-        $sheet->getColumnDimension('E')->setWidth(30);
-        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('C')->setWidth(30);
+        $sheet->getColumnDimension('D')->setWidth(35);
+        $sheet->getColumnDimension('E')->setWidth(40);
+        $sheet->getColumnDimension('F')->setWidth(45);
+        $sheet->getColumnDimension('G')->setWidth(50);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
@@ -631,13 +628,13 @@ class Admin extends CI_Controller
                 \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
             );
 
-        $sheet->setTitle('REKAP BULANAN');
+        $sheet->SetTitle('LAPORAN REKAP BULANAN');
 
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
         header(
-            'Content-Disposition: attachment; filename="REKAP_BULANAN.xlsx"'
+            'Content-Disposition: attachment; filename="REKAP BULANAN.xlsx"'
         );
         header('Cache-Control: max-age=0');
 
@@ -796,10 +793,14 @@ class Admin extends CI_Controller
             $password_baru = $this->input->post('password_baru');
             $konfirmasi_password = $this->input->post('konfirmasi_password');
             $email = $this->input->post('email');
+            $nama_depan = $this->input->post('nama_depan');
+            $nama_belakang = $this->input->post('nama_belakang');
             $username = $this->input->post('username');
             $data = [
                 'foto' => 'User.png',
                 'email' => $email,
+                'nama_depan' => $nama_depan,
+                'nama_belakang' => $nama_belakang,
                 'username' => $username,
             ];
             if (!empty($password_baru)) {
@@ -877,11 +878,9 @@ class Admin extends CI_Controller
 
     public function rekap_bulanan()
     {
-        $bulan = $this->input->get('bulan');
-        $data['rekap_bulanan'] = $this->admin_model->getRekapBulanan($bulan);
-        $data['rekap_harian'] = $this->admin_model->getRekapHarianByBulan(
-            $bulan
-        );
+        $bulan = $this->input->post('bulan');
+        $data['absen'] = $this->m_model->get_bulanan($bulan);
+        $this->session->set_flashdata('bulan', $bulan);
         $this->load->view('admin/rekap_bulanan', $data);
     }
 

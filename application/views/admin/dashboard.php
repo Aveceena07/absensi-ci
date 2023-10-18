@@ -38,6 +38,10 @@
         margin-top: 70px;
     }
 
+    .table {
+        margin-left: 5%;
+    }
+
     .row {
         margin-left: 0;
         /* Menghapus margin kiri */

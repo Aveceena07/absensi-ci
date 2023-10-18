@@ -36,6 +36,18 @@
             </div>
 
             <div class="col-md-6">
+                <label for="nama_depan" class="form-label">Nama Depan</label>
+                <input type="nama_depan" name="nama_depan" class="form-control" id="inputPassword4"
+                    value="<?php echo $user->nama_depan; ?>">
+            </div>
+
+            <div class="col-md-6">
+                <label for="nama_belakang" class="form-label">Nama Belakang</label>
+                <input type="nama_belakang" name="nama_belakang" class="form-control" id="inputPassword4"
+                    value="<?php echo $user->nama_belakang; ?>">
+            </div>
+
+            <div class="col-md-6">
                 <label for="foto" class="form-label">Profil</label>
                 <input type="file" name="foto" class="form-control" id="foto">
             </div>

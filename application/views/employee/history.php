@@ -50,23 +50,23 @@
                 <?php foreach ($absensi as $row): ?>
                 <tr>
                     <td><span class="number"><?php echo $i; ?></span></td>
-                    <td><?php echo $row['kegiatan']; ?></td>
-                    <td><?php echo $row['date']; ?></td>
-                    <td><?php echo $row['jam_masuk']; ?></td>
+                    <td><?php echo $row->kegiatan; ?></td>
+                    <td><?php echo $row->date; ?></td>
+                    <td><?php echo $row->jam_masuk; ?></td>
                     <td>
-                        <?php echo $row['jam_pulang']; ?>
+                        <?php echo $row->jam_pulang; ?>
                     </td>
                     <td>
-                        <?php if (!empty($row['keterangan_izin'])): ?>
-                        <?php echo $row['keterangan_izin']; ?>
+                        <?php if (!empty($row->keterangan_izin)): ?>
+                        <?php echo $row->keterangan_izin; ?>
                         <?php else: ?>
-                        <?php echo $row['kegiatan']; ?>
+                        <?php echo $row->kegiatan; ?>
                         <?php endif; ?>
                     </td>
                     <td>
-                        <?php if ($row['status'] !== 'true'): ?>
+                        <?php if ($row->status !== 'true'): ?>
                         <a href="<?php echo base_url(
-                            'employee/aksi_pulang/' . $row['id']
+                            'employee/aksi_pulang/' . $row->id
                         ); ?>" class="btn btn-success">
                             <i class="fa-solid fa-house"></i>
                         </a>
@@ -79,7 +79,7 @@
                     <!-- <td>
                         <?php if ($row->status !== 'true'): ?>
                         <a href="<?php echo base_url(
-                            'employee/aksi_pulang/' . $row['id']
+                            'employee/aksi_pulang/' . $row->id
                         ); ?>" class="btn btn-success"><i class="fa-solid fa-house"></i></a>
 
                         <?php else: ?>
@@ -89,22 +89,18 @@
                     </td> -->
 
                     <td>
-                        <?php if (!empty($row['keterangan_izin'])): ?>
+                        <?php if (!empty($row->keterangan_izin)): ?>
                         <!-- Tambahkan parameter jenis=izin ke URL saat keterangan izin -->
                         <a href="<?php echo base_url(
-                            !empty($row['kegiatan'])
+                            !empty($row->kegiatan)
                                 ? 'employee/update_absen/'
                                 : 'employee/update_izin/'
-                        ) .
-                            $row[
-                                'id'
-                            ]; ?>" type="button" class="btn btn-warning">
+                        ) . $row->id; ?>" type="button" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a> |
                         <?php endif; ?>
-                        <button type="button" class="btn btn-danger" onclick="hapus(<?php echo $row[
-                            'id'
-                        ]; ?>)"><i class="fa-solid fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger" onclick="hapus(<?php echo $row->id; ?>)"><i
+                                class="fa-solid fa-trash"></i></button>
                     </td>
 
                 </tr>

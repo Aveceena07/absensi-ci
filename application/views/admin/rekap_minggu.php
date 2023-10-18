@@ -32,9 +32,13 @@ h2 {
         margin-left: 10%;
     }
 
-    .table {
+    .exp {
         margin-left: 10%;
+    }
+
+    .table {
         margin-top: 10px;
+        margin-left: 10%;
     }
 }
 </style>

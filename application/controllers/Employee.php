@@ -57,9 +57,7 @@ class Employee extends CI_Controller
         $data['total_absen'] = $this->m_model
             ->get_absen('absensi', $this->session->userdata('id'))
             ->num_rows();
-        $data['total_izin'] = $this->m_model
-            ->get_izin('absensi', $this->session->userdata('id'))
-            ->num_rows();
+        $data['total_izin'] = $this->m_model->get_izin_count($id_karyawan);
 
         $this->load->view('employee/dashboard', $data);
     }
@@ -71,8 +69,10 @@ class Employee extends CI_Controller
 
     public function history()
     {
-        $this->load->model('Absensi_model');
-        $data['absensi'] = $this->Absensi_model->getAbsensi();
+        $id_karyawan = $this->session->userdata('id');
+        $data['absensi'] = $this->m_model->get_absensi_by_karyawan(
+            $id_karyawan
+        );
         $this->load->view('employee/history', $data);
     }
 
@@ -256,10 +256,14 @@ class Employee extends CI_Controller
             $password_baru = $this->input->post('password_baru');
             $konfirmasi_password = $this->input->post('konfirmasi_password');
             $email = $this->input->post('email');
+            $nama_depan = $this->input->post('nama_depan');
+            $nama_belakang = $this->input->post('nama_belakang');
             $username = $this->input->post('username');
             $data = [
                 'foto' => 'User.png',
                 'email' => $email,
+                'nama_depan' => $nama_depan,
+                'nama_belakang' => $nama_belakang,
                 'username' => $username,
             ];
             if (!empty($password_baru)) {
@@ -270,7 +274,7 @@ class Employee extends CI_Controller
                         'message',
                         'Password baru dan Konfirmasi password harus sama'
                     );
-                    redirect(base_url('employee/akun'));
+                    redirect(base_url('employee/profil'));
                 }
             }
             $this->session->set_userdata($data);
@@ -279,9 +283,9 @@ class Employee extends CI_Controller
             ]);
 
             if ($update_result) {
-                redirect(base_url('employee/akun'));
+                redirect(base_url('employee/profil'));
             } else {
-                redirect(base_url('employee/akun'));
+                redirect(base_url('employee/profil'));
             }
         } else {
             $password_baru = $this->input->post('password_baru');
@@ -301,7 +305,7 @@ class Employee extends CI_Controller
                         'message',
                         'Password baru dan Konfirmasi password harus sama'
                     );
-                    redirect(base_url('admin/akun'));
+                    redirect(base_url('admin/profil'));
                 }
             }
             $this->session->set_userdata($data);
@@ -310,9 +314,9 @@ class Employee extends CI_Controller
             ]);
 
             if ($update_result) {
-                redirect(base_url('employee/akun'));
+                redirect(base_url('employee/profil'));
             } else {
-                redirect(base_url('employee/akun'));
+                redirect(base_url('employee/profil'));
             }
         }
     }

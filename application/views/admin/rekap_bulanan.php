@@ -52,79 +52,69 @@ form {
 <body>
     <h2>Rekap Bulanan</h2>
     <?php $this->load->view('sidebar'); ?>
-    <form action="<?= base_url('admin/rekap_bulanan') ?>" method="get">
+    <form action="<?= base_url('admin/rekap_bulanan') ?>" method="post">
         <div class="form-group">
             <select class="form-control" id="bulan" name="bulan">
                 <option>Pilih Bulan</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustus</option>
-                <option value="9">September</option>
+                <option value="01">Januari</option>
+                <option value="02">Februari</option>
+                <option value="03">Maret</option>
+                <option value="04">April</option>
+                <option value="05">Mei</option>
+                <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
                 <option value="10">Oktober</option>
                 <option value="11">November</option>
                 <option value="12">Desember</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-success mt-2"><i class="fa-solid fa-filter"></i></button>
-        <a class="exp btn btn-primary mt-2" href="<?= base_url(
-            'admin/export_bulanan'
-        ) ?>"><i class="fa-solid fa-file-export"></i></a>
+        <button type="submit" class="btn btn-success mt-3">Pilih</button>
+        <a href="<?php echo base_url(
+            'admin/export_rekap_bulanan'
+        ); ?>" class="btn btn-primary mt-3"><i class="fa-solid fa-file-export"></i></a>
     </form>
-    <table class="table table-light table-hover">
+
+    <table class="table table-responsive table-striped table-hover">
         <thead>
             <tr>
-                <th>Bulan</th>
-                <th>Total Absensi</th>
+                <th>No</th>
+                <th>Kegiatan</th>
+                <th>Tanggal</th>
+                <th>Jam masuk</th>
+                <th>Jam Pulang</th>
+                <th>Keterangan</th>
+                <th>Status</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($rekap_bulanan as $data): ?>
+        <tbody class="table-group-divider">
+            <?php if (!empty($absen)): ?>
+            <?php
+            $no = 0;
+            foreach ($absen as $row):
+                $no++; ?>
             <tr>
-                <td><?= date('F', mktime(0, 0, 0, $data['bulan'], 1)) ?></td>
-                <td><?= $data['total_absensi'] ?></td>
+                <td><?php echo $no; ?></td>
+                <td><?php echo $row->kegiatan; ?></td>
+                <td><?php echo $row->date; ?></td>
+                <td><?php echo $row->jam_masuk; ?></td>
+                <td><?php echo $row->jam_pulang; ?></td>
+                <td><?php echo $row->keterangan_izin; ?></td>
+                <td><?php echo $row->status; ?></td>
             </tr>
-            <tr class="detail-row" data-month="<?= $data['bulan'] ?>">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nama</th>
-                            <th>Tanggal</th>
-                            <th>Kegiatan</th>
-                            <th>Masuk</th>
-                            <th>Pulang</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="isi">
-                        <?php foreach ($rekap_harian as $rekap_harian): ?>
-                        <?php if (
-                            date('n', strtotime($rekap_harian['date'])) ==
-                            $data['bulan']
-                        ): ?>
-                        <tr>
-                            <td><?= $rekap_harian['id'] ?></td>
-                            <td><?= panggil_username(
-                                $rekap_harian['id_karyawan']
-                            ) ?></td>
-                            <td><?= $rekap_harian['date'] ?></td>
-                            <td><?= $rekap_harian['kegiatan'] ?></td>
-                            <td><?= $rekap_harian['jam_masuk'] ?></td>
-                            <td><?= $rekap_harian['jam_pulang'] ?></td>
-                            <td><?= $rekap_harian['status'] ?></td>
-                        </tr>
-                        <?php endif; ?>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+            <?php
+            endforeach;
+            ?>
+            <?php else: ?>
+            <tr>
+                <td colspan="7">Tidak ada data yang ditemukan .</td>
             </tr>
-            <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
+    </table>
+    </tr>
+    </tbody>
     </table>
 </body>
 

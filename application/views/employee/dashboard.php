@@ -43,6 +43,10 @@
         /* Menghapus margin kiri */
     }
 
+    .table {
+        margin-left: 5%;
+    }
+
     .icon {
         float: none;
         /* Menghapus floating icon */
@@ -61,7 +65,9 @@
                     <div class="card-body">
                         <i class="fas fa-check fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Masuk</h6>
-                        <h1><?php echo $total_absen; ?> Hari</h1>
+                        <h1>
+                            <h1><?php echo $total_absen; ?> Hari</h1>
+                        </h1>
                     </div>
                 </div>
             </div>

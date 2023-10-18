@@ -66,6 +66,39 @@ class M_model extends CI_Model
         return $data;
     }
 
+    public function getBulanan($bulan)
+    {
+        $this->db->select('absensi.*, user.username');
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_karyawan = user.id', 'left');
+        $this->db->where("DATE_FORMAT(date, '%m') = ", $bulan); // Perbaikan di sini
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getRekapPerBulan($bulan)
+    {
+        $this->db->select(
+            'MONTH(date) as bulan, COUNT(*) as total_absensi, user.username'
+        );
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_karyawan = user.id', 'left');
+        $this->db->where('MONTH(date)', $bulan); // Menyaring data berdasarkan bulan
+        $this->db->group_by('bulan');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getRekapHarianByBulan($bulan)
+    {
+        $this->db->select('absensi.*, user.username');
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_karyawan = user.id', 'left');
+        $this->db->where('MONTH(absensi.date)', $bulan);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function getHarianData($date)
     {
         $this->db->select('absensi.*, user.nama_depan, user.nama_belakang');
@@ -141,6 +174,22 @@ class M_model extends CI_Model
             )
             ->get();
         return $query->result_array();
+    }
+
+    public function get_bulanan($date)
+    {
+        $this->db->from('absensi');
+        $this->db->where("DATE_FORMAT(absensi.date, '%m') =", $date);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_izin_count($id_karyawan)
+    {
+        $this->db->where('id_karyawan', $id_karyawan);
+        $this->db->where('status', 'izin');
+        $this->db->from('absensi');
+        return $this->db->count_all_results();
     }
 
     public function getAbsensiBulan($bulan)
