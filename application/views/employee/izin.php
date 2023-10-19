@@ -14,20 +14,32 @@
     margin-right: 10px;
     margin-top: 100px;
 }
+
+/* Style untuk perangkat seluler */
+@media (max-width: 767px) {
+    .kegiatan {
+        margin-left: 10px;
+    }
+}
 </style>
 
 <body>
     <?php $this->load->view('sidebar_employee'); ?>
     <div class="kegiatan mb-3">
-        <form method="post" enctype="multipart/form-data" action="<?= base_url(
-            'employee/simpan_izin'
-        ) ?>">
-            <h3>Izin</h3>
-            <br>
-            <label for="Keterangan" class="form-label">Keterangan :</label>
-            <textarea class="form-control" aria-label="With textarea" name="keterangan_izin" required></textarea>
-            <button type="submit" class="btn btn-success mt-4">Izin</button>
-        </form>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" action="<?= base_url(
+                    'employee/simpan_izin'
+                ) ?>">
+                    <h3>Izin</h3>
+                    <br>
+                    <label for="Keterangan" class="form-label">Keterangan :</label>
+                    <textarea class="form-control" aria-label="With textarea" name="keterangan_izin"
+                        required></textarea>
+                    <button type="submit" class="btn btn-success mt-4">Izin</button>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 

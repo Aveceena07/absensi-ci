@@ -134,7 +134,7 @@ section .container .user .formBx form .signup a {
                         </div>
                         <input type="submit" name="" value="Login" />
                         <p class="signup">
-                            Don't have an account ?
+                            Belum Memiliki Akun ?
                             <a href="<?php echo 'auth/register'; ?>">Register</a>
                         </p>
                     </form>

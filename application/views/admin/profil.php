@@ -13,12 +13,29 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <style>
+.all {
+    margin-left: 270px;
+}
+
 body {
     margin-top: 100px;
 }
 
+.iden {
+    width: 60%;
+}
+
 /* Style untuk perangkat seluler */
 @media (max-width: 767px) {
+    .all {
+        margin-left: 1px;
+        margin-top: 30px;
+    }
+
+    .iden {
+        width: 100%;
+    }
+
     body {
         margin-top: 5px;
         overflow: auto;
@@ -37,7 +54,8 @@ body {
 
 <body>
     <section>
-        <div class="container py-5">
+        <?php $this->load->view('sidebar'); ?>
+        <div class="all container py-5">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mb-4">
@@ -46,7 +64,9 @@ body {
                                 './images/admin/' . $user->foto
                             ); ?>" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                             <h5 class="my-3"><?php echo $user->username; ?></h5>
-                            <p class="text-muted mb-4"><?php echo $user->role; ?></p>
+                            <p class="text-muted mb-4"><?php echo $user->nama_depan .
+                                ' ' .
+                                $user->nama_belakang; ?></p>
                             <div class="d-flex justify-content-center mb-2">
                                 <a href="<?php echo base_url(
                                     'admin/akun'
@@ -58,7 +78,7 @@ body {
                     </div>
 
                 </div>
-                <div class="col-lg-8">
+                <div class="iden col-lg-8">
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="row">
@@ -94,15 +114,6 @@ body {
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0"><?php echo $user->nama_belakang; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Role</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><?php echo $user->role; ?> </p>
                                 </div>
                             </div>
                         </div>

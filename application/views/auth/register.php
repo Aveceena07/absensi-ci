@@ -142,7 +142,6 @@ section .container .user .formBx form .signup a {
                         'auth/aksi_register'
                     ); ?>" method="post">
                         <h2>Register</h2>
-                        <p class="karyawan">Register Sebagai Karyawan</p>
                         <div class="input-group">
                             <input type="text" name="username" placeholder="Username" />
                             <input type="email" name="email" placeholder="Email" />
@@ -157,14 +156,8 @@ section .container .user .formBx form .signup a {
                         </div>
                         <input type="submit" name="" value="Register" />
                         <p class="signup">
-                            Already have an account?
+                            Sudah Memiliki Akun ?
                             <a href="<?php echo base_url('auth'); ?>">Login</a>
-                        </p>
-                        <p class="signup">
-                            Want to register as admin?
-                            <a href="<?php echo base_url(
-                                'auth/register_admin'
-                            ); ?>">Admin</a>
                         </p>
                     </form>
                 </div>

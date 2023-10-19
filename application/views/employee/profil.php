@@ -13,6 +13,10 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <style>
+body {
+    margin-top: 100px;
+}
+
 /* Style untuk perangkat seluler */
 @media (max-width: 767px) {
     body {
@@ -31,7 +35,7 @@
 </style>
 
 <body>
-    <section style="background-color: #eee;">
+    <section>
         <div class="container py-5">
             <div class="row">
                 <div class="col-lg-4">
@@ -41,7 +45,10 @@
                                 './images/karyawan/' . $user->foto
                             ); ?>" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                             <h5 class="my-3"><?php echo $user->username; ?></h5>
-                            <p class="text-muted mb-4"><?php echo $user->role; ?></p>
+                            <p class="text-muted mb-4"><?php $fullName =
+                                $user->nama_depan .
+                                ' ' .
+                                $user->nama_belakang; ?></p>
                             <div class="d-flex justify-content-center mb-2">
                                 <a href="<?php echo base_url(
                                     'employee/akun'
