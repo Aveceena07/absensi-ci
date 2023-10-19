@@ -90,7 +90,8 @@ form {
         </thead>
         <tbody class="table-group-divider">
             <?php if (!empty($absen)): ?>
-            <?php$no = 0;
+            <?php
+            $no = 0;
             foreach ($absen as $row):
                 $no++; ?>
             <tr>
