@@ -363,7 +363,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function export_karyawan()
+    public function export_all()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();

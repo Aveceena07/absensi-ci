@@ -7,7 +7,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->model('User_model');
-        $this->load->model('Absensi_model');
+        $this->load->model('absensi_model');
         $this->load->model('m_model');
         $this->load->library('form_validation');
         $this->load->library('upload');
@@ -49,10 +49,12 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules(
             'password',
             'Password',
-            'required|min_length[6]'
+            'required|min_length[8]'
         );
 
         if ($this->form_validation->run() === false) {
+            // Tampilkan SweetAlert jika validasi panjang kata sandi gagal
+            $this->session->set_flashdata('password_length_error', true);
             $this->load->view('auth/register');
         } else {
             $data = [
@@ -99,8 +101,12 @@ class Auth extends CI_Controller
             $user = $this->User_model->getUserByEmail($email);
 
             if (!$user) {
-                $data['error'] = 'Email or password is incorrect';
-                $this->load->view('auth', $data);
+                // Menampilkan SweetAlert jika email tidak ditemukan
+                $this->session->set_flashdata(
+                    'login_error',
+                    'Email Tidak Ditemukan.'
+                );
+                $this->load->view('auth/login', $data);
             } else {
                 if (password_verify($password, $user->password)) {
                     $this->session->set_userdata('id', $user->id);
@@ -111,7 +117,11 @@ class Auth extends CI_Controller
                         redirect('employee/dashboard');
                     }
                 } else {
-                    $data['error'] = 'Email or password is incorrect';
+                    // Menampilkan SweetAlert jika password salah
+                    $this->session->set_flashdata(
+                        'login_error',
+                        'Password Salah'
+                    );
                     $this->load->view('auth/login', $data);
                 }
             }

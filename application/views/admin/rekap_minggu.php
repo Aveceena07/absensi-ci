@@ -14,7 +14,12 @@
 <style>
 .table {
     width: 78%;
-    margin-top: 40px;
+    margin-top: 10px;
+    margin-left: 285px;
+}
+
+form {
+    width: 50%;
     margin-left: 285px;
 }
 
@@ -47,7 +52,7 @@ h2 {
     <h2>Rekap Mingguan</h2>
     <?php $this->load->view('sidebar'); ?>
     <table class="table table-light table-hover">
-        <a class="exp btn btn-primary mb-2" href="<?= base_url(
+        <a class="exp btn btn-success mb-2" href="<?= base_url(
             'admin/export_mingguan'
         ) ?>"><i class="fa-solid fa-file-export"></i></a>
         <thead>

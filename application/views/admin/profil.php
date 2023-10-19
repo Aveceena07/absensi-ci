@@ -8,13 +8,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <style>
+body {
+    margin-top: 100px;
+}
+
 /* Style untuk perangkat seluler */
 @media (max-width: 767px) {
     body {
+        margin-top: 5px;
         overflow: auto;
         /* Izinkan discroll */
     }
@@ -30,7 +36,7 @@
 </style>
 
 <body>
-    <section style="background-color: #eee;">
+    <section>
         <div class="container py-5">
             <div class="row">
                 <div class="col-lg-4">
@@ -45,10 +51,8 @@
                                 <a href="<?php echo base_url(
                                     'admin/akun'
                                 ); ?>" type="button" class="btn btn-primary"><i class="fa-solid fa-gear"></i></a>
-                                <a href="<?php echo base_url(
-                                    'auth/logout'
-                                ); ?>" type="button" class="btn btn-danger ms-1"><i
-                                        class="fa-solid fa-right-from-bracket"></i></a>
+                                <a href="javascript:void(0);" onclick="confirmLogout();" type="button"
+                                    class="btn btn-danger ms-1"><i class="fa-solid fa-right-from-bracket"></i></a>
                             </div>
                         </div>
                     </div>
@@ -111,6 +115,26 @@
         </div>
         </div>
     </section>
+    <script>
+    // Fungsi untuk menampilkan konfirmasi SweetAlert saat tombol logout ditekan
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Yakin ingin logout?',
+            text: "Anda akan keluar dari akun Anda.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika konfirmasi "Ya", maka alihkan ke logout
+                window.location.href = "<?php echo base_url('auth/logout'); ?>";
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>

@@ -53,6 +53,9 @@
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                <a href="<?php echo base_url(
+                    'admin/profil'
+                ); ?>" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i></a>
             </div>
         </form>
     </div>

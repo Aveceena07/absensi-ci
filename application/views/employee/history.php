@@ -76,21 +76,21 @@
                         </button>
                         <?php endif; ?>
                     </td>
-                    <!-- <td>
-                        <?php if ($row->status !== 'true'): ?>
-                        <a href="<?php echo base_url(
-                            'employee/aksi_pulang/' . $row->id
-                        ); ?>" class="btn btn-success"><i class="fa-solid fa-house"></i></a>
 
-                        <?php else: ?>
-                        <button type="button" class="btn btn-success" disabled ><i
-                                class="fa-solid fa-house"></i></button>
-                        <?php endif; ?>
-                    </td> -->
 
                     <td>
-                        <?php if (!empty($row->keterangan_izin)): ?>
-                        <!-- Tambahkan parameter jenis=izin ke URL saat keterangan izin -->
+                        <?php if ($row->keterangan_izin == 'masuk'): ?>
+                        <a href="<?php echo base_url('employee/update_absen/') .
+                            $row->id; ?>" class="btn btn-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <?php else: ?>
+                        <a href="<?php echo base_url('employee/update_izin/') .
+                            $row->id; ?>" class="btn btn-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <?php endif; ?>
+                        <!-- <?php if (!empty($row->keterangan_izin)): ?>
                         <a href="<?php echo base_url(
                             !empty($row->kegiatan)
                                 ? 'employee/update_absen/'
@@ -98,7 +98,7 @@
                         ) . $row->id; ?>" type="button" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a> |
-                        <?php endif; ?>
+                        <?php endif; ?> -->
                         <button type="button" class="btn btn-danger" onclick="hapus(<?php echo $row->id; ?>)"><i
                                 class="fa-solid fa-trash"></i></button>
                     </td>

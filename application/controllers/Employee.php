@@ -7,7 +7,7 @@ class Employee extends CI_Controller
     {
         parent::__construct();
         $this->load->model('User_model');
-        $this->load->model('Absensi_model');
+        $this->load->model('absensi_model');
         $this->load->model('m_model');
         $this->load->library('upload');
         $this->load->library('form_validation');
@@ -57,7 +57,9 @@ class Employee extends CI_Controller
         $data['total_absen'] = $this->m_model
             ->get_absen('absensi', $this->session->userdata('id'))
             ->num_rows();
-        $data['total_izin'] = $this->m_model->get_izin_count($id_karyawan);
+        $data['total_izin'] = $this->m_model
+            ->get_izin('absensi', $this->session->userdata('id'))
+            ->num_rows();
 
         $this->load->view('employee/dashboard', $data);
     }
@@ -196,7 +198,8 @@ class Employee extends CI_Controller
         $data = [
             'id_karyawan' => $id_karyawan,
             'status' => 'true',
-            'keterangan_izin' => 'sakit',
+            'kegiatan' => '-',
+            'keterangan_izin' => $this->input->post('keterangan_izin'),
             'date' => $tanggal_sekarang,
             'jam_masuk' => '-', // Mengosongkan jam_masuk
             'jam_pulang' => '-', // Mengosongkan jam_pulang

@@ -125,12 +125,6 @@ class M_model extends CI_Model
             ->get($table);
     }
 
-    public function update($table, $data, $where)
-    {
-        $data = $this->db->update($table, $data, $where);
-        return $this->db->affected_rows();
-    }
-
     function get_absen($table, $id_karyawan)
     {
         return $this->db
@@ -138,6 +132,27 @@ class M_model extends CI_Model
             ->where('keterangan_izin', 'masuk')
             ->get($table);
     }
+    // function get_izin($table, $id_karyawan)
+    // {
+    //     return $this->db
+    //         ->where('id_karyawan', $id_karyawan)
+    //         ->where('kegiatan', '-')
+    //         ->get($table);
+    // }
+
+    public function update($table, $data, $where)
+    {
+        $data = $this->db->update($table, $data, $where);
+        return $this->db->affected_rows();
+    }
+
+    // function get_absen($table, $id_karyawan)
+    // {
+    //     return $this->db
+    //         ->where('id_karyawan', $id_karyawan)
+    //         ->where('keterangan_izin', 'masuk')
+    //         ->get($table);
+    // }
 
     public function ubah_data($table, $data, $where)
     {

@@ -13,7 +13,7 @@
 </head>
 <style>
 .table {
-    width: 50%;
+    width: 60%;
     margin-top: 40px;
     margin-left: 285px;
 }
@@ -90,8 +90,7 @@ form {
         </thead>
         <tbody class="table-group-divider">
             <?php if (!empty($absen)): ?>
-            <?php
-            $no = 0;
+            <?php$no = 0;
             foreach ($absen as $row):
                 $no++; ?>
             <tr>

@@ -50,7 +50,7 @@ table {
             <h2>Daftar Karyawan</h2>
             <a class="exp btn btn-success mb-1" href="<?= base_url(
                 'admin/export_daftar_karyawan'
-            ) ?>"><i class="fa-solid fa-filter"></i></a>
+            ) ?>"><i class="fa-solid fa-file-export"></i></a>
             <table class="table">
                 <thead>
                     <tr>

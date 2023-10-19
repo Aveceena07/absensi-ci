@@ -26,7 +26,7 @@ form {
 }
 
 .table {
-    width: 50%;
+    width: 60%;
     margin-top: 20px;
     margin-left: 285px;
 }
@@ -64,7 +64,7 @@ form {
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Nama Karyawan</th>
                 <th>Tanggal</th>
                 <th>Kegiatan</th>
@@ -74,9 +74,13 @@ form {
             </tr>
         </thead>
         <tbody>
+            <?php if (!empty($rekap_harian)): ?>
+            <?php $no = 1;
+                // Inisialisasi nomor urut
+                ?>
             <?php foreach ($rekap_harian as $rekap): ?>
             <tr>
-                <td><?= $rekap['id'] ?></td>
+                <td><?= $no ?></td> <!-- Mengganti kolom ID dengan nomor urut -->
                 <td><?= panggil_username($rekap['id_karyawan']) ?></td>
                 <td><?= $rekap['date'] ?></td>
                 <td><?= $rekap['kegiatan'] ?></td>
@@ -84,7 +88,15 @@ form {
                 <td><?= $rekap['jam_pulang'] ?></td>
                 <td><?= $rekap['status'] ?></td>
             </tr>
+            <?php $no++;
+                // Menambah nomor urut setiap kali melalui loop
+                ?>
             <?php endforeach; ?>
+            <?php else: ?>
+            <tr>
+                <td colspan="7">Tidak ada data yang ditemukan.</td>
+            </tr>
+            <?php endif; ?>
         </tbody>
     </table>
 </body>

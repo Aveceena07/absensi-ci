@@ -50,7 +50,7 @@ table {
         <div class="col-md-9">
             <h2>History Absen</h2>
             <a href="<?= base_url(
-                'admin/export_karyawan'
+                'admin/export_all'
             ) ?>" type="button" class="expo btn btn-success"><i class="fa-solid fa-file-export"></i></a>
             <table class="table">
                 <thead>

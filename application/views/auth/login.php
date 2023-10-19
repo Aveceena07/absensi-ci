@@ -101,6 +101,8 @@ section .container .user .formBx form .signup a {
     color: #677eff;
 }
 
+
+
 @media (max-width: 991px) {
     section .container {
         max-width: 400px;
@@ -141,17 +143,15 @@ section .container .user .formBx form .signup a {
         </div>
     </section>
     <script>
-    <?php if (isset($success_login) && $success_login === true): ?>
+    <?php if ($this->session->flashdata('login_error')): ?>
     Swal.fire({
-        title: 'Login Successful',
-        text: 'You have successfully logged in.',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
+        title: 'Login Error',
+        text: '<?php echo $this->session->flashdata('login_error'); ?>',
+        icon: 'error',
+        showConfirmButton: true
     });
     <?php endif; ?>
     </script>
-
 
 </body>
 

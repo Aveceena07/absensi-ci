@@ -28,7 +28,8 @@
             <br>
             <!--  -->
             <label for="Kegiatan" class="form-label">Keterangan :</label>
-            <textarea class="form-control" aria-label="With textarea" name="keterangan_izin"></textarea>
+            <textarea class="form-control" aria-label="With textarea"
+                name="keterangan_izin"><?php echo $absen->keterangan_izin; ?></textarea>
             <button type="submit" class="btn btn-success mt-4">Ubah</button>
         </form>
         <?php endforeach; ?>

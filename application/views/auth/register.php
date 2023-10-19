@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <style>
 @import url('https://fonts.googleapis.com/css?family:Poppins:100,200,300,400,500,600,700,800,900&display=swap');
@@ -101,6 +101,23 @@ section .container .user .formBx form .signup a {
     color: #677eff;
 }
 
+.input-group {
+    position: relative;
+}
+
+.show-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+#password {
+    padding-right: 30px;
+    /* Biarkan ruang untuk ikon mata */
+}
+
 @media (max-width: 991px) {
     section .container {
         max-width: 400px;
@@ -131,7 +148,12 @@ section .container .user .formBx form .signup a {
                             <input type="email" name="email" placeholder="Email" />
                             <input type="text" name="nama_depan" placeholder="Nama Depan" />
                             <input type="text" name="nama_belakang" placeholder="Nama Belakang" />
-                            <input type="password" name="password" placeholder="Password" />
+                            <div class="input-group">
+                                <input type="password" name="password" id="password" placeholder="Password" />
+                                <div class="show-password">
+                                    <i class="fas fa-eye" id="togglePassword"></i>
+                                </div>
+                            </div>
                         </div>
                         <input type="submit" name="" value="Register" />
                         <p class="signup">
@@ -150,16 +172,34 @@ section .container .user .formBx form .signup a {
         </div>
     </section>
     <script>
-    <?php if ($this->session->flashdata('success_register')): ?>
+    document.addEventListener("DOMContentLoaded", function() {
+        var passwordInput = document.getElementById("password");
+        var togglePasswordButton = document.getElementById("togglePassword");
+
+        togglePasswordButton.addEventListener("click", function() {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                togglePasswordButton.classList.remove("fa-eye");
+                togglePasswordButton.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                togglePasswordButton.classList.remove("fa-eye-slash");
+                togglePasswordButton.classList.add("fa-eye");
+            }
+        });
+    });
+    </script>
+    <script>
+    <?php if ($this->session->flashdata('password_length_error')): ?>
     Swal.fire({
-        title: 'Registration Successful',
-        text: 'You have successfully registered.',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
+        title: 'Password Error',
+        text: 'Password harus memiliki 8 karakter',
+        icon: 'error',
+        showConfirmButton: true
     });
     <?php endif; ?>
     </script>
+
 </body>
 
 </html>

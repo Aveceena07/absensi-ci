@@ -66,7 +66,7 @@
                         <i class="fas fa-check fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Masuk</h6>
                         <h1>
-                            <h1><?php echo $total_absen; ?> Hari</h1>
+                            <h1><?php echo $total_absen; ?></h1>
                         </h1>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                     <div class="card-body">
                         <i class="fa-solid fa-calculator fa-4x icon float-end"></i>
                         <h6 class="card-title">Total</h6>
-                        <h1><?php echo $absensi; ?></h1>
+                        <h1><?php echo $absensi_count; ?></h1>
                     </div>
                 </div>
             </div>
