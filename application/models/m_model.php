@@ -22,13 +22,13 @@ class M_model extends CI_Model
     {
         $this->db->where('id_karyawan', $id_karyawan);
         $this->db->where('date', $tanggal);
-        $this->db->where('status', 'true'); // Hanya mencari entri dengan status izin
+        $this->db->where('status', 'true');
         $query = $this->db->get('absensi');
 
         if ($query->num_rows() > 0) {
-            return true; // Jika sudah ada entri izin untuk karyawan dan tanggal tertentu
+            return true;
         } else {
-            return false; // Jika belum ada entri izin untuk karyawan dan tanggal tertentu
+            return false;
         }
     }
 
@@ -71,7 +71,7 @@ class M_model extends CI_Model
         $this->db->select('absensi.*, user.username');
         $this->db->from('absensi');
         $this->db->join('user', 'absensi.id_karyawan = user.id', 'left');
-        $this->db->where("DATE_FORMAT(date, '%m') = ", $bulan); // Perbaikan di sini
+        $this->db->where("DATE_FORMAT(date, '%m') = ", $bulan);
         $query = $this->db->get();
         return $query->result();
     }
@@ -83,7 +83,7 @@ class M_model extends CI_Model
         );
         $this->db->from('absensi');
         $this->db->join('user', 'absensi.id_karyawan = user.id', 'left');
-        $this->db->where('MONTH(date)', $bulan); // Menyaring data berdasarkan bulan
+        $this->db->where('MONTH(date)', $bulan);
         $this->db->group_by('bulan');
         $query = $this->db->get();
         return $query->result_array();
@@ -132,27 +132,12 @@ class M_model extends CI_Model
             ->where('keterangan_izin', 'masuk')
             ->get($table);
     }
-    // function get_izin($table, $id_karyawan)
-    // {
-    //     return $this->db
-    //         ->where('id_karyawan', $id_karyawan)
-    //         ->where('kegiatan', '-')
-    //         ->get($table);
-    // }
 
     public function update($table, $data, $where)
     {
         $data = $this->db->update($table, $data, $where);
         return $this->db->affected_rows();
     }
-
-    // function get_absen($table, $id_karyawan)
-    // {
-    //     return $this->db
-    //         ->where('id_karyawan', $id_karyawan)
-    //         ->where('keterangan_izin', 'masuk')
-    //         ->get($table);
-    // }
 
     public function ubah_data($table, $data, $where)
     {
@@ -175,7 +160,6 @@ class M_model extends CI_Model
         $this->load->database();
         $end_date = date('Y-m-d');
         $start_date = date('Y-m-d', strtotime('-7 days', strtotime($end_date)));
-        // $query = $this->db->select('kegiatan ,date , jam_masuk, jam_pulang, keterangan_izin, status, COUNT(*) AS total_absences')
         $query = $this->db
             ->select(
                 'absensi.*,user.nama_depan, user.nama_belakang, COUNT(*) AS total_absences'

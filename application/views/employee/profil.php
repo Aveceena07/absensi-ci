@@ -17,9 +17,27 @@ body {
     margin-top: 100px;
 }
 
+.all {
+    margin-left: 270px;
+}
+
+.iden {
+    width: 60%;
+}
+
 /* Style untuk perangkat seluler */
 @media (max-width: 767px) {
+    .all {
+        margin-left: 1px;
+        margin-top: 30px;
+    }
+
+    .iden {
+        width: 100%;
+    }
+
     body {
+        margin-top: 5px;
         overflow: auto;
         /* Izinkan discroll */
     }
@@ -36,7 +54,8 @@ body {
 
 <body>
     <section>
-        <div class="container py-5">
+        <?php $this->load->view('sidebar'); ?>
+        <div class="all container py-5">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mb-4">
@@ -61,7 +80,7 @@ body {
                     </div>
 
                 </div>
-                <div class="col-lg-8">
+                <div class="iden col-lg-8">
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="row">

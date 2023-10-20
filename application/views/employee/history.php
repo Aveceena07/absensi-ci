@@ -79,7 +79,17 @@
 
 
                     <td>
-                        <?php if ($row->keterangan_izin == 'masuk'): ?>
+                        <?php
+                    // Mendapatkan waktu saat ini dalam format jam:menit (misalnya, "15:30")
+                    $waktu_sekarang = date('H:i');
+
+                    // Menentukan waktu batas (16:00)
+                    $waktu_batas = '16:00';
+
+                    if (
+                        $row->status !== 'true' &&
+                        $waktu_sekarang >= $waktu_batas
+                    ): ?>
                         <a href="<?php echo base_url('employee/update_absen/') .
                             $row->id; ?>" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -89,7 +99,8 @@
                             $row->id; ?>" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <?php endif; ?>
+                        <?php endif;
+                    ?>
                         <!-- <?php if (!empty($row->keterangan_izin)): ?>
                         <a href="<?php echo base_url(
                             !empty($row->kegiatan)

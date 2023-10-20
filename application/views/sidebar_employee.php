@@ -365,20 +365,22 @@ body.dark {
                 <ul class="">
                     <a href="<?php echo base_url(
                         'employee/izin'
-                    ); ?>" class="nav_link sublink"><i class="fas fa-shield"></i> Izin
+                    ); ?>" class="nav_link sublink"><i class="fa-solid fa-circle-xmark "></i> Izin
                     </a>
                 </ul>
 
                 <ul class="">
                     <a href="<?php echo base_url(
                         'employee/tambah_absen'
-                    ); ?>" class="nav_link sublink">Absensi</a>
+                    ); ?>" class="nav_link sublink"><i class="fas fa-check-square"></i> Absensi
+                    </a>
                 </ul>
 
                 <ul class="">
                     <a href="<?php echo base_url(
                         'employee/history'
-                    ); ?>" class="nav_link sublink">History</a>
+                    ); ?>" class="nav_link sublink"><i class="fas fa-history"></i> History
+                    </a>
                 </ul>
             </li>
 
