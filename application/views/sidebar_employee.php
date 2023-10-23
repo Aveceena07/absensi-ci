@@ -174,27 +174,25 @@ body.dark {
     list-style: none;
 }
 
-.navlink_icon {
-    position: relative;
-    font-size: 22px;
-    min-width: 50px;
-    line-height: 40px;
-    display: inline-block;
-    text-align: center;
-    border-radius: 6px;
+.nav_link {
+    display: flex;
+    align-items: center;
+    /* Menambahkan jarak vertikal antara ikon dan teks */
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--grey-color);
 }
 
-.navlink_icon::before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: calc(100% + 100px);
-    left: -20px;
+.nav_link i {
+    margin-right: 10px;
+    /* Menambahkan jarak horizontal antara ikon dan teks */
 }
 
-.navlink_icon:hover {
-    background: var(--blue-color);
+.nav_link:hover {
+    color: var(--blue-color);
+    background-color: var(--grey-color-light);
 }
+
 
 .sidebar .nav_link {
     display: flex;
@@ -343,8 +341,9 @@ body.dark {
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
             <a href="<?php echo base_url('employee/profil'); ?>">
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
-                    alt="" class="profile" />
+                <img src="<?php echo base_url(
+                    './images/karyawan/' . $user->foto
+                ); ?>" alt="" class="profile" />
             </a>
         </div>
     </nav>
@@ -364,15 +363,16 @@ body.dark {
 
                 <ul class="">
                     <a href="<?php echo base_url(
-                        'employee/izin'
-                    ); ?>" class="nav_link sublink"><i class="fa-solid fa-circle-xmark "></i> Izin
+                        'employee/tambah_absen'
+                    ); ?>" class="nav_link sublink"><i class="fas fa-check-square"></i> Absensi
                     </a>
                 </ul>
 
+
                 <ul class="">
                     <a href="<?php echo base_url(
-                        'employee/tambah_absen'
-                    ); ?>" class="nav_link sublink"><i class="fas fa-check-square"></i> Absensi
+                        'employee/izin'
+                    ); ?>" class="nav_link sublink"><i class="fa-solid fa-circle-xmark "></i> Izin
                     </a>
                 </ul>
 

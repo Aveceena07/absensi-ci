@@ -8,6 +8,7 @@ class Employee extends CI_Controller
         parent::__construct();
         $this->load->model('User_model');
         $this->load->model('absensi_model');
+        $this->load->helper('my_helper');
         $this->load->model('m_model');
         $this->load->library('upload');
         $this->load->library('form_validation');
@@ -71,6 +72,8 @@ class Employee extends CI_Controller
 
     public function history()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $id_karyawan = $this->session->userdata('id');
         $data['absensi'] = $this->m_model->get_absensi_by_karyawan(
             $id_karyawan
@@ -186,6 +189,8 @@ class Employee extends CI_Controller
 
     public function izin()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $this->load->view('employee/izin');
     }
 

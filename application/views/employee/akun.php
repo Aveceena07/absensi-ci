@@ -34,8 +34,17 @@
                     value="<?php echo $user->email; ?>">
             </div>
             <div class="col-md-6">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="inputPassword4">
+                <label for="foto" class="form-label">Profil</label>
+                <input type="file" name="foto" class="form-control" id="foto">
+            </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Password Baru</label>
+                <input type="password" name="password_baru" class="form-control" id="inputPassword4">
+            </div>
+
+            <div class="col-md-6">
+                <label for="password" class="form-label">Konfirmasi Password</label>
+                <input type="password" name="konfirmasi_password" class="form-control" id="inputPassword4">
             </div>
 
             <div class="col-md-6">
@@ -50,10 +59,6 @@
                     value="<?php echo $user->nama_belakang; ?>">
             </div>
 
-            <div class="col-md-6">
-                <label for="foto" class="form-label">Profil</label>
-                <input type="file" name="foto" class="form-control" id="foto">
-            </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
                 <a href="<?php echo base_url(

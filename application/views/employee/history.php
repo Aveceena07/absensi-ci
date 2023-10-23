@@ -31,6 +31,7 @@
 
 <body>
     <?php $this->load->view('sidebar_employee'); ?>
+
     <div class="table-responsive">
         <table class="table text-center table-hover">
             <thead>
@@ -51,7 +52,7 @@
                 <tr>
                     <td><span class="number"><?php echo $i; ?></span></td>
                     <td><?php echo $row->kegiatan; ?></td>
-                    <td><?php echo $row->date; ?></td>
+                    <td><?php echo convDate($row->date); ?></td>
                     <td><?php echo $row->jam_masuk; ?></td>
                     <td>
                         <?php echo $row->jam_pulang; ?>
@@ -80,16 +81,16 @@
 
                     <td>
                         <?php
-                    // Mendapatkan waktu saat ini dalam format jam:menit (misalnya, "15:30")
-                    $waktu_sekarang = date('H:i');
+                        // Mendapatkan waktu saat ini dalam format jam:menit (misalnya, "15:30")
+                        $waktu_sekarang = date('H:i');
 
-                    // Menentukan waktu batas (16:00)
-                    $waktu_batas = '16:00';
+                        // Menentukan waktu batas (16:00)
+                        $waktu_batas = '16:00';
 
-                    if (
-                        $row->status !== 'true' &&
-                        $waktu_sekarang >= $waktu_batas
-                    ): ?>
+                        if (
+                            $row->status !== 'true' &&
+                            $waktu_sekarang >= $waktu_batas
+                        ): ?>
                         <a href="<?php echo base_url('employee/update_absen/') .
                             $row->id; ?>" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -100,7 +101,7 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <?php endif;
-                    ?>
+                        ?>
                         <!-- <?php if (!empty($row->keterangan_izin)): ?>
                         <a href="<?php echo base_url(
                             !empty($row->kegiatan)

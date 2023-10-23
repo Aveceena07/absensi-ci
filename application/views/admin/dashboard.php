@@ -65,7 +65,7 @@
                     <div class="card-body">
                         <i class="fas fa-check fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah User</h6>
-                        <h1><?php echo $user; ?></h1>
+                        <h1><?php echo $pengguna; ?></h1>
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             </thead>
             <tbody>
                 <?php $i = 1; ?>
-                <?php foreach ($absensi as $row): ?>
+                <?php foreach ($absen as $row): ?>
                 <tr>
                     <td><span class="number"><?php echo $i; ?></span></td>
                     <td><?php echo $row->kegiatan; ?></td>

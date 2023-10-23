@@ -20,9 +20,11 @@ class Admin extends CI_Controller
 
     public function dashboard()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $id_admin = $this->session->userdata('id');
-        $data['absensi'] = $this->m_model->get_data('absensi')->result();
-        $data['user'] = $this->m_model->get_data('user')->num_rows();
+        $data['absen'] = $this->m_model->get_data('absensi')->result();
+        $data['pengguna'] = $this->m_model->get_data('user')->num_rows();
         $data['karyawan'] = $this->m_model->get_karyawan_rows();
         $data['absensi_num'] = $this->m_model->get_absensi_count();
         $this->load->view('admin/dashboard', $data);
@@ -162,7 +164,7 @@ class Admin extends CI_Controller
             $no = 1;
             $numrow = 4;
             foreach ($data_mingguan as $data) {
-                $sheet->setCellValue('A' . $numrow, $data['id']);
+                $sheet->setCellValue('A' . $numrow, $no);
                 $sheet->setCellValue(
                     'B' . $numrow,
                     $data['nama_depan'] . ' ' . $data['nama_belakang']
@@ -285,7 +287,7 @@ class Admin extends CI_Controller
                 ->getFont()
                 ->setBold(true);
             // set thead
-            $sheet->setCellValue('A3', 'ID');
+            $sheet->setCellValue('A3', 'No');
             $sheet->setCellValue('B3', 'NAMA KARYAWAN');
             $sheet->setCellValue('C3', 'KEGIATAN');
             $sheet->setCellValue('D3', 'DATE');
@@ -308,7 +310,7 @@ class Admin extends CI_Controller
             $no = 1;
             $numrow = 4;
             foreach ($data_harian as $data) {
-                $sheet->setCellValue('A' . $numrow, $data->id);
+                $sheet->setCellValue('A' . $numrow, $no);
                 $sheet->setCellValue(
                     'B' . $numrow,
                     $data->nama_depan . ' ' . $data->nama_belakang
@@ -429,7 +431,7 @@ class Admin extends CI_Controller
             ->getFont()
             ->setBold(true);
         // set thead
-        $sheet->setCellValue('A3', 'ID');
+        $sheet->setCellValue('A3', 'No');
         $sheet->setCellValue('B3', 'NAMA KARYAWAN');
         $sheet->setCellValue('C3', 'KEGIATAN');
         $sheet->setCellValue('D3', 'TANGGAL');
@@ -452,7 +454,7 @@ class Admin extends CI_Controller
         $no = 1;
         $numrow = 4;
         foreach ($data_siswa as $data) {
-            $sheet->setCellValue('A' . $numrow, $data->id);
+            $sheet->setCellValue('A' . $numrow, $no);
             $sheet->setCellValue('B' . $numrow, $data->username);
             $sheet->setCellValue('C' . $numrow, $data->kegiatan);
             $sheet->setCellValue('D' . $numrow, $data->date);
@@ -571,7 +573,7 @@ class Admin extends CI_Controller
             ->getFont()
             ->setBold(true);
 
-        $sheet->setCellValue('A3', 'ID');
+        $sheet->setCellValue('A3', 'No');
         $sheet->setCellValue('B3', 'KEGIATAN');
         $sheet->setCellValue('C3', 'TANGGAL');
         $sheet->setCellValue('D3', 'JAM MASUK');
@@ -592,7 +594,7 @@ class Admin extends CI_Controller
         $no = 1;
         $numrow = 4;
         foreach ($data as $data) {
-            $sheet->setCellValue('A' . $numrow, $data->id);
+            $sheet->setCellValue('A' . $numrow, $no);
             $sheet->setCellValue('B' . $numrow, $data->kegiatan);
             $sheet->setCellValue('C' . $numrow, $data->date);
             $sheet->setCellValue('D' . $numrow, $data->jam_masuk);
@@ -708,7 +710,7 @@ class Admin extends CI_Controller
             ->getFont()
             ->setBold(true);
         // set thead
-        $sheet->setCellValue('A3', 'ID');
+        $sheet->setCellValue('A3', 'No');
         $sheet->setCellValue('B3', 'NAMA KARYAWAN');
         $sheet->setCellValue('C3', 'EMAIL');
 
@@ -723,7 +725,7 @@ class Admin extends CI_Controller
         $no = 1;
         $numrow = 4;
         foreach ($data_karyawan as $data) {
-            $sheet->setCellValue('A' . $numrow, $data->id);
+            $sheet->setCellValue('A' . $numrow, $no);
             $sheet->setCellValue('B' . $numrow, $data->username);
             $sheet->setCellValue('C' . $numrow, $data->email);
 
@@ -860,12 +862,16 @@ class Admin extends CI_Controller
 
     public function history_absen()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $data['absensi'] = $this->m_model->get_data('absensi')->result();
         $this->load->view('admin/history_absen', $data);
     }
 
     public function rekap_minggu()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $data['absensi'] = $this->admin_model->getAbsensiLast7Days();
         $this->load->view('admin/rekap_minggu', $data);
     }
@@ -873,11 +879,15 @@ class Admin extends CI_Controller
     public function daftar_karyawan()
     {
         $data['absensi'] = $this->User_model->getAllKaryawan();
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $this->load->view('admin/daftar_karyawan', $data);
     }
 
     public function rekap_bulanan()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $bulan = $this->input->post('bulan');
         $data['absen'] = $this->m_model->get_bulanan($bulan);
         $this->session->set_flashdata('bulan', $bulan);
@@ -886,6 +896,8 @@ class Admin extends CI_Controller
 
     public function rekap_harian()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $tanggal = $this->input->get('tanggal'); // Ambil tanggal dari parameter GET
         $data['rekap_harian'] = $this->admin_model->getRekapHarian($tanggal);
         $this->load->view('admin/rekap_harian', $data);

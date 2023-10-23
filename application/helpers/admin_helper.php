@@ -19,5 +19,10 @@ function panggil_username($id)
             return $stmt;
         }
     }
+
+    function convDate($date)
+    {
+        return date('d F Y', strtotime($date));
+    }
 }
 ?>

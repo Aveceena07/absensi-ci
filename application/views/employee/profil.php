@@ -54,7 +54,7 @@ body {
 
 <body>
     <section>
-        <?php $this->load->view('sidebar'); ?>
+        <?php $this->load->view('sidebar_employee'); ?>
         <div class="all container py-5">
             <div class="row">
                 <div class="col-lg-4">
@@ -64,8 +64,7 @@ body {
                                 './images/karyawan/' . $user->foto
                             ); ?>" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                             <h5 class="my-3"><?php echo $user->username; ?></h5>
-                            <p class="text-muted mb-4"><?php $fullName =
-                                $user->nama_depan .
+                            <p class="text-muted mb-4"><?php echo $user->nama_depan .
                                 ' ' .
                                 $user->nama_belakang; ?></p>
                             <div class="d-flex justify-content-center mb-2">
@@ -116,15 +115,6 @@ body {
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0"><?php echo $user->nama_belakang; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Role</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><?php echo $user->role; ?> </p>
                                 </div>
                             </div>
                         </div>

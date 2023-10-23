@@ -150,14 +150,14 @@ section .container .user .formBx form .signup a {
                             <div class="input-group">
                                 <input type="password" name="password" id="password" placeholder="Password" />
                                 <div class="show-password">
-                                    <i class="fas fa-eye" id="togglePassword"></i>
+                                    <i class="fas fa-eye-slash" id="togglePassword"></i>
                                 </div>
                             </div>
                         </div>
                         <input type="submit" name="" value="Register" />
                         <p class="signup">
                             Sudah Memiliki Akun ?
-                            <a href="<?php echo base_url('auth'); ?>">Login</a>
+                            <a href="<?php echo base_url('home'); ?>">Login</a>
                         </p>
                     </form>
                 </div>

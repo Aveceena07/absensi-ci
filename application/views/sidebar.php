@@ -214,16 +214,24 @@ body.dark {
 }
 
 .nav_link {
-    display: block;
+    display: flex;
+    align-items: center;
+    /* Menambahkan jarak vertikal antara ikon dan teks */
     padding: 10px 20px;
     text-decoration: none;
     color: var(--grey-color);
+}
+
+.nav_link i {
+    margin-right: 10px;
+    /* Menambahkan jarak horizontal antara ikon dan teks */
 }
 
 .nav_link:hover {
     color: var(--blue-color);
     background-color: var(--grey-color-light);
 }
+
 
 .sidebar.close .navlink {
     display: none;
@@ -361,8 +369,9 @@ body.dark {
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
             <a href="<?php echo base_url('admin/profil'); ?>">
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
-                    alt="" class="profile" />
+                <img src="<?php echo base_url(
+                    './images/admin/' . $user->foto
+                ); ?>" alt="" class="profile" />
             </a>
         </div>
     </nav>
