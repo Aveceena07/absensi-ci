@@ -79,7 +79,7 @@ class Auth extends CI_Controller
 
             $this->session->set_flashdata('success_register', true);
 
-            redirect('auth');
+            redirect('home');
         }
     }
 

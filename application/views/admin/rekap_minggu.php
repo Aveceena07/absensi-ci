@@ -52,7 +52,7 @@ h2 {
     <h2>Rekap Mingguan</h2>
     <?php $this->load->view('sidebar'); ?>
     <table class="table table-light table-hover">
-        <a class="exp btn btn-success mb-2" href="<?= base_url(
+        <a class="exp btn btn-primary mb-2" href="<?= base_url(
             'admin/export_mingguan'
         ) ?>"><i class="fa-solid fa-file-export"></i></a>
         <thead>
@@ -73,9 +73,7 @@ h2 {
                 <td>
                     <?php echo $absen['kegiatan']; ?>
                 </td>
-                <td>
-                    <?php echo $absen['date']; ?>
-                </td>
+                <td><?php echo convDate($absen['date']); ?></td>
                 <td>
                     <?php echo $absen['jam_masuk']; ?>
                 </td>

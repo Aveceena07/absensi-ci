@@ -50,6 +50,8 @@ class Employee extends CI_Controller
 
     public function dashboard()
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $id_karyawan = $this->session->userdata('id');
         $data['absensi'] = $this->m_model->get_absensi_by_karyawan(
             $id_karyawan
@@ -67,7 +69,9 @@ class Employee extends CI_Controller
 
     public function tambah_absen()
     {
-        $this->load->view('employee/tambah_absen');
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
+        $this->load->view('employee/tambah_absen', $data);
     }
 
     public function history()
@@ -144,6 +148,8 @@ class Employee extends CI_Controller
 
     public function update_absen($id)
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $data['absensi'] = $this->m_model
             ->get_by_id('absensi', 'id', $id)
             ->result();
@@ -191,7 +197,7 @@ class Employee extends CI_Controller
     {
         $user_id = $this->session->userdata('id');
         $data['user'] = $this->User_model->getUserById($user_id);
-        $this->load->view('employee/izin');
+        $this->load->view('employee/izin', $data);
     }
 
     public function simpan_izin()
@@ -239,6 +245,8 @@ class Employee extends CI_Controller
 
     public function update_izin($id)
     {
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->User_model->getUserById($user_id);
         $data['absensi'] = $this->m_model
             ->get_by_id('absensi', 'id', $id)
             ->result();
@@ -327,15 +335,5 @@ class Employee extends CI_Controller
                 redirect(base_url('employee/profil'));
             }
         }
-    }
-
-    public function hapus($id)
-    {
-        $this->m_model->delete('absensi', 'id', $id);
-        $this->session->set_flashdata(
-            'berhasil_menghapus',
-            'Data berhasil dihapus.'
-        );
-        redirect(base_url('employee/history'));
     }
 }

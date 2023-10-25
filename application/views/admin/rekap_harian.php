@@ -26,7 +26,7 @@ form {
 }
 
 .table {
-    width: 60%;
+    width: 70%;
     margin-top: 20px;
     margin-left: 285px;
 }
@@ -82,7 +82,7 @@ form {
             <tr>
                 <td><?= $no ?></td> <!-- Mengganti kolom ID dengan nomor urut -->
                 <td><?= panggil_username($rekap['id_karyawan']) ?></td>
-                <td><?= $rekap['date'] ?></td>
+                <td><?php echo convDate($rekap['date']); ?></td>
                 <td><?= $rekap['kegiatan'] ?></td>
                 <td><?= $rekap['jam_masuk'] ?></td>
                 <td><?= $rekap['jam_pulang'] ?></td>

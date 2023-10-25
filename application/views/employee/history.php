@@ -111,8 +111,6 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a> |
                         <?php endif; ?> -->
-                        <button type="button" class="btn btn-danger" onclick="hapus(<?php echo $row->id; ?>)"><i
-                                class="fa-solid fa-trash"></i></button>
                     </td>
 
                 </tr>
@@ -121,30 +119,6 @@
             </tbody>
         </table>
     </div>
-
-    <!-- ... -->
-
-
-    <script>
-    function hapus(id) {
-        Swal.fire({
-            title: 'Yakin Di Hapus?',
-            text: "Anda tidak dapat mengembalikannya!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#198754',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "<?php echo base_url(
-                    'employee/hapus/'
-                ); ?>" + id;
-            }
-        });
-    }
-    </script>
 
 </body>
 

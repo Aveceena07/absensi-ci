@@ -13,7 +13,7 @@
 </head>
 <style>
 .table {
-    width: 60%;
+    width: 70%;
     margin-top: 40px;
     margin-left: 285px;
 }
@@ -70,7 +70,7 @@ form {
                 <option value="12">Desember</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-success mt-3">Pilih</button>
+        <button type="submit" class="btn btn-success mt-3"><i class="fa-solid fa-filter"></i></button>
         <a href="<?php echo base_url(
             'admin/export_rekap_bulanan'
         ); ?>" class="btn btn-primary mt-3"><i class="fa-solid fa-file-export"></i></a>
@@ -80,6 +80,7 @@ form {
         <thead>
             <tr>
                 <th>No</th>
+                <th>Nama</th>
                 <th>Kegiatan</th>
                 <th>Tanggal</th>
                 <th>Jam masuk</th>
@@ -96,8 +97,9 @@ form {
                 $no++; ?>
             <tr>
                 <td><?php echo $no; ?></td>
+                <td><?php echo nama_karyawan($row->id_karyawan); ?></td>
                 <td><?php echo $row->kegiatan; ?></td>
-                <td><?php echo $row->date; ?></td>
+                <td><?php echo convDate($row->date); ?></td>
                 <td><?php echo $row->jam_masuk; ?></td>
                 <td><?php echo $row->jam_pulang; ?></td>
                 <td><?php echo $row->keterangan_izin; ?></td>

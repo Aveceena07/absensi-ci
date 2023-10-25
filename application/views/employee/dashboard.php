@@ -90,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <table class="table table-striped mt-5">
+        <table class="table table-striped mt-3">
             <thead>
                 <tr>
                     <th scope="col">No</th>
@@ -107,7 +107,7 @@
                 <tr>
                     <td><span class="number"><?php echo $i; ?></span></td>
                     <td><?php echo $row->kegiatan; ?></td>
-                    <td><?php echo $row->date; ?></td>
+                    <td><?php echo convDate($row->date); ?></td>
                     <td><?php echo $row->jam_masuk; ?></td>
                     <td>
                         <span id="jam-pulang-<?php echo $i; ?>">

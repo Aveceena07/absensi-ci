@@ -32,6 +32,12 @@ class M_model extends CI_Model
         }
     }
 
+    public function hapusKaryawan($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user'); // Ganti 'nama_tabel' dengan nama tabel Anda
+    }
+
     public function cek_absen($id_karyawan, $tanggal)
     {
         $this->db->where('id_karyawan', $id_karyawan);

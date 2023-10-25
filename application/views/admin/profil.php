@@ -86,7 +86,7 @@ body {
                                     <p class="mb-0">Username</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><?php echo $user->username; ?></p>
+                                    <input type="text" value="<?php echo $user->username; ?>"></input>
                                 </div>
                             </div>
                             <hr>
