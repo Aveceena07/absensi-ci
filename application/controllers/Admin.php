@@ -776,18 +776,6 @@ class Admin extends CI_Controller
         }
     }
 
-    public function akun()
-    {
-        if ($this->session->userdata('id')) {
-            $user_id = $this->session->userdata('id');
-            $data['user'] = $this->User_model->getUserById($user_id);
-
-            $this->load->view('admin/akun', $data);
-        } else {
-            redirect('auth/login');
-        }
-    }
-
     public function aksi_ubah_akun()
     {
         $foto = $this->upload_image_admin('foto');

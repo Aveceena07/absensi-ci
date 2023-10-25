@@ -62,10 +62,7 @@ class Auth extends CI_Controller
                 'email' => $this->input->post('email'),
                 'nama_depan' => $this->input->post('nama_depan'),
                 'nama_belakang' => $this->input->post('nama_belakang'),
-                'password' => password_hash(
-                    $this->input->post('password'),
-                    PASSWORD_DEFAULT
-                ),
+                'password' => md5($this->input->post('password')),
                 'role' => 'karyawan',
             ];
 
@@ -85,46 +82,31 @@ class Auth extends CI_Controller
 
     public function aksi_login()
     {
-        $this->form_validation->set_rules(
-            'email',
-            'Email',
-            'required|valid_email'
-        );
-        $this->form_validation->set_rules('password', 'Password', 'required');
+        $email = $this->input->post('email', true);
+        $password = $this->input->post('password', true);
+        $data = ['email' => $email];
+        $query = $this->m_model->getwhere('user', $data);
+        $result = $query->row_array();
 
-        if ($this->form_validation->run() === false) {
-            $this->load->view('auth');
-        } else {
-            $email = $this->input->post('email');
-            $password = $this->input->post('password');
-
-            $user = $this->User_model->getUserByEmail($email);
-
-            if (!$user) {
-                // Menampilkan SweetAlert jika email tidak ditemukan
-                $this->session->set_flashdata(
-                    'login_error',
-                    'Email Tidak Ditemukan.'
-                );
-                $this->load->view('auth/login', $data);
+        if (!empty($result) && md5($password) === $result['password']) {
+            $data = [
+                'logged_in' => true,
+                'email' => $result['email'],
+                'username' => $result['username'],
+                'role' => $result['role'],
+                'id' => $result['id'],
+            ];
+            $this->session->set_userdata($data);
+            if ($this->session->userdata('role') == 'admin') {
+                redirect(base_url() . 'admin/dashboard');
+            } elseif ($this->session->userdata('role') == 'karyawan') {
+                redirect(base_url() . 'employee/dashboard');
             } else {
-                if (password_verify($password, $user->password)) {
-                    $this->session->set_userdata('id', $user->id);
-
-                    if ($user->role == 'admin') {
-                        redirect('admin/dashboard');
-                    } elseif ($user->role == 'karyawan') {
-                        redirect('employee/dashboard');
-                    }
-                } else {
-                    // Menampilkan SweetAlert jika password salah
-                    $this->session->set_flashdata(
-                        'login_error',
-                        'Password Salah'
-                    );
-                    $this->load->view('auth/login', $data);
-                }
+                redirect(base_url() . 'home');
             }
+        } else {
+            $this->session->set_flashdata('login_error', 'Password Salah');
+            redirect(base_url() . 'home');
         }
     }
 

@@ -420,17 +420,17 @@ body.dark {
                     <li>
                         <a href="<?php echo base_url(
                             'admin/rekap_harian'
-                        ); ?>">Rekap Harian</a>
+                        ); ?>" class="nav_link">Rekap Harian</a>
                     </li>
                     <li>
                         <a href="<?php echo base_url(
                             'admin/rekap_minggu'
-                        ); ?>"></i>Rekap Mingguan</a>
+                        ); ?>" class="nav_link"></i>Rekap Mingguan</a>
                     </li>
                     <li>
                         <a href="<?php echo base_url(
                             'admin/rekap_bulanan'
-                        ); ?>">Rekap Bulanan</a>
+                        ); ?>" class="nav_link">Rekap Bulanan</a>
                     </li>
                 </ul>
             </li>

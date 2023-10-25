@@ -13,17 +13,27 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <style>
+.all {
+    margin-left: 285px;
+}
+
+.tomb {
+    margin-left: 75%;
+}
+
 body {
     margin-top: 100px;
 }
 
-.all {
-    margin-left: 270px;
+.iden {
+    width: 90%;
 }
 
-.iden {
-    width: 60%;
+.form-container {
+    width: 50%;
+    /* Atur lebar div form menjadi 100% */
 }
+
 
 /* Style untuk perangkat seluler */
 @media (max-width: 767px) {
@@ -68,59 +78,75 @@ body {
                                 ' ' .
                                 $user->nama_belakang; ?></p>
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="<?php echo base_url(
-                                    'employee/akun'
-                                ); ?>" type="button" class="btn btn-primary"><i class="fa-solid fa-gear"></i></a>
                                 <a href="javascript:void(0);" onclick="confirmLogout();" type="button"
                                     class="btn btn-danger ms-1"><i class="fa-solid fa-right-from-bracket"></i></a>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="iden col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Username</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><?php echo $user->username; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Email</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><?php echo $user->email; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Nama Depan</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><?php echo $user->nama_depan; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Nama Belakang</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><?php echo $user->nama_belakang; ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="iden col-lg-8 form-container">
+                    <form method="post" action="<?= base_url(
+                        'employee/aksi_ubah_akun'
+                    ) ?>" enctype="multipart/form-data">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <h3>Profil <button type="submit" class="tomb btn btn-primary"><i
+                                                class="fa-solid fa-floppy-disk"></i></button></h3>
 
-
+                                    <hr>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" name="username" id="username" class="form-control"
+                                                value="<?php echo $user->username; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Email</label>
+                                            <input type="text" name="email" id="email" class="form-control"
+                                                value="<?php echo $user->email; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Nama Depan</label>
+                                            <input type="text" name="nama_depan" id="nama_depan" class="form-control"
+                                                value="<?php echo $user->nama_depan; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Nama Belakang</label>
+                                            <input type="text" name="nama_belakang" id="nama_belakang"
+                                                class="form-control" value="<?php echo $user->nama_belakang; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="nama_depan" class="form-label">Password Baru</label>
+                                            <input type="password" name="password_baru" class="form-control"
+                                                id="username">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="nama_belakang" class="form-label">Konfirmasi Password</label>
+                                            <input type="password" name="konfirmasi_password" class="form-control"
+                                                id="email">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="nama_belakang" class="form-label">Foto</label>
+                                            <input type="file" name="foto" class="form-control" id="foto"
+                                                value="<?php echo $user->foto; ?>">
+                                        </div>
+                                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -147,7 +173,6 @@ body {
         });
     }
     </script>
-
 </body>
 
 </html>
