@@ -96,28 +96,28 @@ body {
 
                                     <hr>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label for="username" class="form-label">Username</label>
                                             <input type="text" name="username" id="username" class="form-control"
                                                 value="<?php echo $user->username; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label for="username" class="form-label">Email</label>
                                             <input type="text" name="email" id="email" class="form-control"
                                                 value="<?php echo $user->email; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label for="username" class="form-label">Nama Depan</label>
                                             <input type="text" name="nama_depan" id="nama_depan" class="form-control"
                                                 value="<?php echo $user->nama_depan; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label for="email" class="form-label">Nama Belakang</label>
                                             <input type="text" name="nama_belakang" id="nama_belakang"
                                                 class="form-control" value="<?php echo $user->nama_belakang; ?>">
@@ -126,14 +126,14 @@ body {
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label for="nama_depan" class="form-label">Password Baru</label>
                                             <input type="password" name="password_baru" class="form-control"
                                                 id="username">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label for="nama_belakang" class="form-label">Konfirmasi Password</label>
                                             <input type="password" name="konfirmasi_password" class="form-control"
                                                 id="email">
@@ -146,6 +146,7 @@ body {
                                                 value="<?php echo $user->foto; ?>">
                                         </div>
                                     </div>
+
                     </form>
                 </div>
             </div>
@@ -153,6 +154,7 @@ body {
         </div>
         </div>
     </section>
+
     <script>
     // Fungsi untuk menampilkan konfirmasi SweetAlert saat tombol logout ditekan
     function confirmLogout() {
@@ -173,6 +175,7 @@ body {
         });
     }
     </script>
+
 </body>
 
 </html>
